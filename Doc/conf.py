@@ -17,8 +17,8 @@ extensions = ['sphinx.ext.coverage', 'sphinx.ext.doctest',
               'pyspecific', 'c_annotations']
 
 # General substitutions.
-project = 'Python'
-copyright = '2001-%s, Python Software Foundation' % time.strftime('%Y')
+project = '파이썬'
+copyright = '2001-%s, 파이썬 소프트웨어 재단' % time.strftime('%Y')
 
 # We look for the Include/patchlevel.h file in the current Python source tree
 # and replace the values accordingly.
@@ -51,7 +51,7 @@ html_theme_path = ['tools']
 html_theme_options = {'collapsiblesidebar': True}
 
 # Short title used e.g. for <title> HTML tags.
-html_short_title = '%s Documentation' % release
+html_short_title = '%s 문서' % release
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
@@ -65,13 +65,13 @@ html_sidebars = {
     # Defaults taken from http://www.sphinx-doc.org/en/stable/config.html#confval-html_sidebars
     # Removes the quick search block
     '**': ['localtoc.html', 'relations.html', 'customsourcelink.html'],
-    'index': ['indexsidebar.html'],
+    'index': ['indexsidebar_ko.html'],
 }
 
 # Additional templates that should be rendered to pages.
 html_additional_pages = {
     'download': 'download.html',
-    'index': 'indexcontent.html',
+    'index': 'indexcontent_ko.html',
 }
 
 # Output an OpenSearch description file.
