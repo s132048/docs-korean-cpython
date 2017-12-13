@@ -206,3 +206,9 @@ autobuild-stable-html:
 		exit 1;; \
 	esac
 	@make autobuild-dev-html
+
+# i18n commands
+.PHONY: gettext
+gettext:
+	$(SPHINXBUILD) -E -b gettext -D gettext_compact=0  -w warnings.txt -d build/.doctrees . locale/pot
+	$(PYTHON) tools/delete_pot_creation_date.py locale/pot

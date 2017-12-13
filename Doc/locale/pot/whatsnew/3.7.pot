@@ -1,0 +1,761 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2001-2017, 파이썬 소프트웨어 재단
+# This file is distributed under the same license as the 파이썬 package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 파이썬 3.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-12 23:01+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../whatsnew/3.7.rst:3
+msgid "What's New In Python 3.7"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:0
+msgid "Release"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:5
+msgid "|release|"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:0
+msgid "Date"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:6
+msgid "|today|"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:48
+msgid "This article explains the new features in Python 3.7, compared to 3.6."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:50
+msgid "For full details, see the :ref:`changelog <changelog>`."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:54
+msgid "Prerelease users should be aware that this document is currently in draft form. It will be updated substantially as Python 3.7 moves towards release, so it's worth checking back even after reading earlier versions."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:60
+msgid "Summary -- Release highlights"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:71
+msgid "New Features"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:76
+msgid "PEP 538: Legacy C Locale Coercion"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:78
+msgid "An ongoing challenge within the Python 3 series has been determining a sensible default strategy for handling the \"7-bit ASCII\" text encoding assumption currently implied by the use of the default C locale on non-Windows platforms."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:82
+msgid ":pep:`538` updates the default interpreter command line interface to automatically coerce that locale to an available UTF-8 based locale as described in the documentation of the new :envvar:`PYTHONCOERCECLOCALE` environment variable. Automatically setting ``LC_CTYPE`` this way means that both the core interpreter and locale-aware C extensions (such as :mod:`readline`) will assume the use of UTF-8 as the default text encoding, rather than ASCII."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:90
+msgid "The platform support definition in :pep:`11` has also been updated to limit full text handling support to suitably configured non-ASCII based locales."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:93
+msgid "As part of this change, the default error handler for ``stdin`` and ``stdout`` is now ``surrogateescape`` (rather than ``strict``) when using any of the defined coercion target locales (currently ``C.UTF-8``, ``C.utf8``, and ``UTF-8``). The default error handler for ``stderr`` continues to be ``backslashreplace``, regardless of locale."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:99
+msgid "Locale coercion is silent by default, but to assist in debugging potentially locale related integration problems, explicit warnings (emitted directly on ``stderr`` can be requested by setting ``PYTHONCOERCECLOCALE=warn``. This setting will also cause the Python runtime to emit a warning if the legacy C locale remains active when the core interpreter is initialized."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:107
+msgid ":pep:`538` -- Coercing the legacy C locale to a UTF-8 based locale"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:108
+msgid "PEP written and implemented by Nick Coghlan."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:113
+msgid "PEP 553: Built-in breakpoint()"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:115
+msgid ":pep:`553` describes a new built-in called ``breakpoint()`` which makes it easy and consistent to enter the Python debugger.  Built-in ``breakpoint()`` calls ``sys.breakpointhook()``.  By default, this latter imports ``pdb`` and then calls ``pdb.set_trace()``, but by binding ``sys.breakpointhook()`` to the function of your choosing, ``breakpoint()`` can enter any debugger.  Or, the environment variable :envvar:`PYTHONBREAKPOINT` can be set to the callable of your debugger of choice.  Set ``PYTHONBREAKPOINT=0`` to completely disable built-in ``breakpoint()``."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:126
+msgid ":pep:`553` -- Built-in breakpoint()"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:127
+msgid "PEP written and implemented by Barry Warsaw"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:133
+msgid "PEP 539: A New C-API for Thread-Local Storage in CPython"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:135
+msgid "While Python provides a C API for thread-local storage support; the existing :ref:`Thread Local Storage (TLS) API <thread-local-storage-api>` has used :c:type:`int` to represent TLS keys across all platforms.  This has not generally been a problem for officially-support platforms, but that is neither POSIX-compliant, nor portable in any practical sense."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:141
+msgid ":pep:`539` changes this by providing a new :ref:`Thread Specific Storage (TSS) API <thread-specific-storage-api>` to CPython which supersedes use of the existing TLS API within the CPython interpreter, while deprecating the existing API.  The TSS API uses a new type :c:type:`Py_tss_t` instead of :c:type:`int` to represent TSS keys--an opaque type the definition of which may depend on the underlying TLS implementation.  Therefore, this will allow to build CPython on platforms where the native TLS key is defined in a way that cannot be safely cast to :c:type:`int`."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:150
+msgid "Note that on platforms where the native TLS key is defined in a way that cannot be safely cast to :c:type:`int`, all functions of the existing TLS API will be no-op and immediately return failure. This indicates clearly that the old API is not supported on platforms where it cannot be used reliably, and that no effort will be made to add such support."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:158
+msgid ":pep:`539` -- A New C-API for Thread-Local Storage in CPython"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:159
+msgid "PEP written by Erik M. Bray; implementation by Masayuki Yamamoto."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:163
+msgid "PEP 564: Add new time functions with nanosecond resolution"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:165
+msgid "Add six new \"nanosecond\" variants of existing functions to the :mod:`time` module:"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:168
+#: ../../whatsnew/3.7.rst:373
+msgid ":func:`time.clock_gettime_ns`"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:169
+#: ../../whatsnew/3.7.rst:374
+msgid ":func:`time.clock_settime_ns`"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:170
+#: ../../whatsnew/3.7.rst:375
+msgid ":func:`time.monotonic_ns`"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:171
+#: ../../whatsnew/3.7.rst:376
+msgid ":func:`time.perf_counter_ns`"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:172
+#: ../../whatsnew/3.7.rst:377
+msgid ":func:`time.process_time_ns`"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:173
+#: ../../whatsnew/3.7.rst:378
+msgid ":func:`time.time_ns`"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:175
+msgid "While similar to the existing functions without the ``_ns`` suffix, they provide nanosecond resolution: they return a number of nanoseconds as a Python ``int``."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:179
+msgid "The ``time.time_ns()`` resolution is 3 times better than the ``time.time()`` resolution on Linux and Windows."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:184
+msgid ":pep:`564` -- Add new time functions with nanosecond resolution"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:185
+msgid "PEP written and implemented by Victor Stinner"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:189
+msgid "New Developer Mode: -X dev"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:191
+msgid "Add a new \"developer mode\": ``-X dev`` command line option to enable debug checks at runtime."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:194
+msgid "In short, ``python3 -X dev ...`` behaves as ``PYTHONMALLOC=debug python3 -W default -X faulthandler ...``, except that the PYTHONMALLOC environment variable is not set in practice."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:198
+msgid "See :option:`-X` ``dev`` for the details."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:202
+msgid "Other Language Changes"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:204
+msgid "More than 255 arguments can now be passed to a function, and a function can now have more than 255 parameters. (Contributed by Serhiy Storchaka in :issue:`12844` and :issue:`18896`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:208
+msgid ":meth:`bytes.fromhex` and :meth:`bytearray.fromhex` now ignore all ASCII whitespace, not only spaces. (Contributed by Robert Xiao in :issue:`28927`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:211
+msgid ":exc:`ImportError` now displays module name and module ``__file__`` path when ``from ... import ...`` fails. (Contributed by Matthias Bussonnier in :issue:`29546`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:214
+msgid "Circular imports involving absolute imports with binding a submodule to a name are now supported. (Contributed by Serhiy Storchaka in :issue:`30024`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:218
+msgid "``object.__format__(x, '')`` is now equivalent to ``str(x)`` rather than ``format(str(self), '')``. (Contributed by Serhiy Storchaka in :issue:`28974`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:224
+msgid "New Modules"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:226
+msgid "None yet."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:230
+msgid "Improved Modules"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:234
+msgid "argparse"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:236
+msgid "The :meth:`~argparse.ArgumentParser.parse_intermixed_args` supports letting the user intermix options and positional arguments on the command line, as is possible in many unix commands.  It supports most but not all argparse features.  (Contributed by paul.j3 in :issue:`14191`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:243
+msgid "binascii"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:245
+msgid "The :func:`~binascii.b2a_uu` function now accepts an optional *backtick* keyword argument.  When it's true, zeros are represented by ``'`'`` instead of spaces.  (Contributed by Xiang Zhang in :issue:`30103`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:251
+msgid "calendar"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:253
+msgid "The class :class:`~calendar.HTMLCalendar` has new class attributes which ease the customisation of the CSS classes in the produced HTML calendar. (Contributed by Oz Tiram in :issue:`30095`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:258
+msgid "cgi"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:260
+msgid ":func:`~cgi.parse_multipart` returns the same results as :class:`~FieldStorage` : for non-file fields, the value associated to a key is a list of strings, not bytes. (Contributed by Pierre Quentel in :issue:`29979`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:266
+msgid "contextlib"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:268
+msgid ":func:`contextlib.asynccontextmanager` has been added. (Contributed by Jelle Zijlstra in :issue:`29679`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:272
+msgid "cProfile"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:274
+msgid "cProfile command line now accepts `-m module_name` as an alternative to script path. (Contributed by Sanyam Khurana in :issue:`21862`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:278
+msgid "crypt"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:280
+msgid "Added support for the Blowfish method. (Contributed by Serhiy Storchaka in :issue:`31664`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:283
+msgid "The :func:`~crypt.mksalt` function now allows to specify the number of rounds for hashing.  (Contributed by Serhiy Storchaka in :issue:`31702`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:287
+msgid "dis"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:289
+msgid "The :func:`~dis.dis` function now is able to disassemble nested code objects (the code of comprehensions, generator expressions and nested functions, and the code used for building nested classes).  (Contributed by Serhiy Storchaka in :issue:`11822`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:295
+msgid "distutils"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:297
+msgid "README.rst is now included in the list of distutils standard READMEs and therefore included in source distributions. (Contributed by Ryan Gonzalez in :issue:`11913`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:302
+msgid "http.client"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:304
+msgid "Add Configurable *blocksize* to ``HTTPConnection`` and ``HTTPSConnection`` for improved upload throughput. (Contributed by Nir Soffer in :issue:`31945`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:309
+msgid "http.server"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:311
+msgid ":class:`~http.server.SimpleHTTPRequestHandler` supports the HTTP If-Modified-Since header. The server returns the 304 response status if the target file was not modified after the time specified in the header. (Contributed by Pierre Quentel in :issue:`29654`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:316
+msgid "Add the parameter ``directory`` to the :class:`~http.server.SimpleHTTPRequestHandler` and the ``--directory`` to the command line of the module :mod:`~http.server`. With this parameter, the server serves the specified directory, by default it uses the current working directory. (Contributed by Stéphane Wirtel and Julien Palard in :issue:`28707`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:322
+msgid "locale"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:324
+msgid "Added another argument *monetary* in :meth:`format_string` of :mod:`locale`. If *monetary* is true, the conversion uses monetary thousands separator and grouping strings. (Contributed by Garvit in :issue:`10379`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:329
+msgid "math"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:331
+msgid "New :func:`~math.remainder` function, implementing the IEEE 754-style remainder operation. (Contributed by Mark Dickinson in :issue:`29962`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:335
+msgid "os"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:337
+msgid "Added support for :class:`bytes` paths in :func:`~os.fwalk`. (Contributed by Serhiy Storchaka in :issue:`28682`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:340
+msgid "Added support for :ref:`file descriptors <path_fd>` in :func:`~os.scandir` on Unix.  (Contributed by Serhiy Storchaka in :issue:`25996`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:343
+msgid "New function :func:`os.register_at_fork` allows registering Python callbacks to be executed on a process fork.  (Contributed by Antoine Pitrou in :issue:`16500`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:348
+msgid "pdb"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:350
+msgid ":func:`~pdb.set_trace` now takes an optional *header* keyword-only argument.  If given, this is printed to the console just before debugging begins.  (Contributed by Barry Warsaw in :issue:`31389`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:355
+msgid "re"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:357
+msgid "The flags :const:`re.ASCII`, :const:`re.LOCALE` and :const:`re.UNICODE` can be set within the scope of a group. (Contributed by Serhiy Storchaka in :issue:`31690`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:362
+msgid "string"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:364
+msgid ":class:`string.Template` now lets you to optionally modify the regular expression pattern for braced placeholders and non-braced placeholders separately.  (Contributed by Barry Warsaw in :issue:`1198569`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:369
+msgid "time"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:371
+msgid "The :pep:`564` added six new functions with nanosecond resolution:"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:380
+msgid "Add new clock identifiers:"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:382
+msgid ":data:`time.CLOCK_BOOTTIME` (Linux): Identical to :data:`time.CLOCK_MONOTONIC`, except it also includes any time that the system is suspended."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:385
+msgid ":data:`time.CLOCK_PROF` (FreeBSD, NetBSD and OpenBSD): High-resolution per-process timer from the CPU."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:387
+msgid ":data:`time.CLOCK_UPTIME` (FreeBSD, OpenBSD): Time whose absolute value is the time the system has been running and not suspended, providing accurate uptime measurement, both absolute and interval."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:391
+msgid "Added functions :func:`time.thread_time` and :func:`time.thread_time_ns` to get per-thread CPU time measurements. (Contributed by Antoine Pitrou in :issue:`32025`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:396
+msgid "unittest.mock"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:398
+msgid "The :const:`~unittest.mock.sentinel` attributes now preserve their identity when they are :mod:`copied <copy>` or :mod:`pickled <pickle>`. (Contributed by Serhiy Storchaka in :issue:`20804`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:402
+msgid "New function :const:`~unittest.mock.seal` will disable the creation of mock children by preventing to get or set any new attribute on the sealed mock. The sealing process is performed recursively. (Contributed by Mario Corchero in :issue:`30541`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:408
+msgid "xmlrpc.server"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:410
+msgid ":meth:`register_function` of :class:`xmlrpc.server.SimpleXMLRPCDispatcher` and its subclasses can be used as a decorator. (Contributed by Xiang Zhang in :issue:`7769`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:415
+msgid "unicodedata"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:417
+msgid "The internal :mod:`unicodedata` database has been upgraded to use `Unicode 10 <http://www.unicode.org/versions/Unicode10.0.0/>`_. (Contributed by Benjamin Peterson.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:422
+msgid "urllib.parse"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:424
+msgid ":func:`urllib.parse.quote` has been updated from RFC 2396 to RFC 3986, adding `~` to the set of characters that is never quoted by default. (Contributed by Christian Theune and Ratnadeep Debnath in :issue:`16285`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:429
+msgid "uu"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:431
+msgid "Function :func:`~uu.encode` now accepts an optional *backtick* keyword argument.  When it's true, zeros are represented by ``'`'`` instead of spaces.  (Contributed by Xiang Zhang in :issue:`30103`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:436
+msgid "xml.etree"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:438
+msgid ":ref:`ElementPath <elementtree-xpath>` predicates in the :meth:`find` methods can now compare text of the current node with ``[. = \"text\"]``, not only text in children.  Predicates also allow adding spaces for better readability.  (Contributed by Stefan Behnel in :issue:`31648`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:444
+msgid "zipapp"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:446
+msgid "Function :func:`zipapp.create_archive` now accepts an optional *filter* argument to allow the user to select which files should be included in the archive, and an optional *compressed* argument to generate a compressed archive."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:451
+msgid "A command line option ``--compress`` has also been added to support compression."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:456
+msgid "Optimizations"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:458
+msgid "Added two new opcodes: ``LOAD_METHOD`` and ``CALL_METHOD`` to avoid instantiation of bound method objects for method calls, which results in method calls being faster up to 20%. (Contributed by Yury Selivanov and INADA Naoki in :issue:`26110`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:463
+msgid "Searching some unlucky Unicode characters (like Ukrainian capital \"Є\") in a string was up to 25 times slower than searching other characters. Now it is slower only by 3 times in the worst case. (Contributed by Serhiy Storchaka in :issue:`24821`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:468
+msgid "Fast implementation from standard C library is now used for functions :func:`~math.erf` and :func:`~math.erfc` in the :mod:`math` module. (Contributed by Serhiy Storchaka in :issue:`26121`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:472
+msgid "The :func:`os.fwalk` function has been sped up by 2 times.  This was done using the :func:`os.scandir` function. (Contributed by Serhiy Storchaka in :issue:`25996`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:476
+msgid "The :func:`shutil.rmtree` function has been sped up to 20--40%. This was done using the :func:`os.scandir` function. (Contributed by Serhiy Storchaka in :issue:`28564`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:480
+msgid "Optimized case-insensitive matching and searching of :mod:`regular expressions <re>`.  Searching some patterns can now be up to 20 times faster. (Contributed by Serhiy Storchaka in :issue:`30285`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:484
+msgid ":func:`re.compile` now converts ``flags`` parameter to int object if it is ``RegexFlag``.  It is now as fast as Python 3.5, and faster than Python 3.6 by about 10% depending on the pattern. (Contributed by INADA Naoki in :issue:`31671`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:489
+msgid ":meth:`selectors.EpollSelector.modify`, :meth:`selectors.PollSelector.modify` and :meth:`selectors.DevpollSelector.modify` may be around 10% faster under heavy loads. (Contributed by Giampaolo Rodola' in :issue:`30014`)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:494
+msgid "Build and C API Changes"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:496
+msgid "A full copy of libffi is no longer bundled for use when building the :mod:`_ctypes <ctypes>` module on non-OSX UNIX platforms.  An installed copy of libffi is now required when building ``_ctypes`` on such platforms. Contributed by Zachary Ware in :issue:`27979`."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:501
+msgid "The fields :c:member:`name` and :c:member:`doc` of structures :c:type:`PyMemberDef`, :c:type:`PyGetSetDef`, :c:type:`PyStructSequence_Field`, :c:type:`PyStructSequence_Desc`, and :c:type:`wrapperbase` are now of type ``const char *`` rather of ``char *``.  (Contributed by Serhiy Storchaka in :issue:`28761`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:507
+msgid "The result of :c:func:`PyUnicode_AsUTF8AndSize` and :c:func:`PyUnicode_AsUTF8` is now of type ``const char *`` rather of ``char *``. (Contributed by Serhiy Storchaka in :issue:`28769`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:511
+msgid "The result of :c:func:`PyMapping_Keys`, :c:func:`PyMapping_Values` and :c:func:`PyMapping_Items` is now always a list, rather than a list or a tuple. (Contributed by Oren Milman in :issue:`28280`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:515
+msgid "Added functions :c:func:`PySlice_Unpack` and :c:func:`PySlice_AdjustIndices`. (Contributed by Serhiy Storchaka in :issue:`27867`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:518
+msgid ":c:func:`PyOS_AfterFork` is deprecated in favour of the new functions :c:func:`PyOS_BeforeFork`, :c:func:`PyOS_AfterFork_Parent` and :c:func:`PyOS_AfterFork_Child`.  (Contributed by Antoine Pitrou in :issue:`16500`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:523
+msgid "The Windows build process no longer depends on Subversion to pull in external sources, a Python script is used to download zipfiles from GitHub instead. If Python 3.6 is not found on the system (via ``py -3.6``), NuGet is used to download a copy of 32-bit Python for this purpose.  (Contributed by Zachary Ware in :issue:`30450`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:529
+msgid "The ``PyExc_RecursionErrorInst`` singleton that was part of the public API has been removed as its members being never cleared may cause a segfault during finalization of the interpreter. Contributed by Xavier de Gaye in :issue:`22898` and :issue:`30697`."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:534
+msgid "Support for building ``--without-threads`` is removed. (Contributed by Antoine Pitrou in :issue:`31370`.)."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:539
+msgid "Other CPython Implementation Changes"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:541
+msgid "Trace hooks may now opt out of receiving ``line`` events from the interpreter by setting the new ``f_trace_lines`` attribute to :const:`False` on the frame being traced. (Contributed by Nick Coghlan in :issue:`31344`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:545
+msgid "Trace hooks may now opt in to receiving ``opcode`` events from the interpreter by setting the new ``f_trace_opcodes`` attribute to :const:`True` on the frame being traced. (Contributed by Nick Coghlan in :issue:`31344`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:551
+msgid "Deprecated"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:553
+msgid "Function :c:func:`PySlice_GetIndicesEx` is deprecated and replaced with a macro if ``Py_LIMITED_API`` is not set or set to the value between ``0x03050400`` and ``0x03060000`` (not including) or ``0x03060100`` or higher.  (Contributed by Serhiy Storchaka in :issue:`27867`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:558
+msgid "Deprecated :meth:`format` from :mod:`locale`, use the :meth:`format_string` instead. (Contributed by Garvit in :issue:`10379`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:561
+msgid "Methods :meth:`MetaPathFinder.find_module() <importlib.abc.MetaPathFinder.find_module>` (replaced by :meth:`MetaPathFinder.find_spec() <importlib.abc.MetaPathFinder.find_spec>` ) and :meth:`PathEntryFinder.find_loader() <importlib.abc.PathEntryFinder.find_loader>` (replaced by :meth:`PathEntryFinder.find_spec() <importlib.abc.PathEntryFinder.find_spec>`) both deprecated in Python 3.4 now emit :exc:`DeprecationWarning`. (Contributed by Matthias Bussonnier in :issue:`29576`)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:572
+msgid "Using non-integer value for selecting a plural form in :mod:`gettext` is now deprecated.  It never correctly worked. (Contributed by Serhiy Storchaka in :issue:`28692`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:576
+msgid "The :mod:`macpath` is now deprecated and will be removed in Python 3.8."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:580
+#: ../../whatsnew/3.7.rst:732
+msgid "Changes in the C API"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:582
+msgid "The type of results of :c:func:`PyThread_start_new_thread` and :c:func:`PyThread_get_thread_ident`, and the *id* parameter of :c:func:`PyThreadState_SetAsyncExc` changed from :c:type:`long` to :c:type:`unsigned long`. (Contributed by Serhiy Storchaka in :issue:`6532`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:588
+msgid ":c:func:`PyUnicode_AsWideCharString` now raises a :exc:`ValueError` if the second argument is *NULL* and the :c:type:`wchar_t*` string contains null characters.  (Contributed by Serhiy Storchaka in :issue:`30708`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:594
+msgid "Windows Only"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:595
+msgid "The python launcher, (py.exe), can accept 32 & 64 bit specifiers **without** having to specify a minor version as well. So ``py -3-32`` and ``py -3-64`` become valid as well as ``py -3.7-32``, also the -*m*-64 and -*m.n*-64 forms are now accepted to force 64 bit python even if 32 bit would have otherwise been used. If the specified version is not available py.exe will error exit. (Contributed by Steve Barnes in :issue:`30291`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:602
+msgid "The launcher can be run as \"py -0\" to produce a list of the installed pythons, *with default marked with an asterix*. Running \"py -0p\" will include the paths. If py is run with a version specifier that cannot be matched it will also print the *short form* list of available specifiers. (Contributed by Steve Barnes in :issue:`30362`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:609
+msgid "Removed"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:612
+msgid "API and Feature Removals"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:614
+msgid "The ``os.stat_float_times()`` function has been removed. It was introduced in Python 2.3 for backward compatibility with Python 2.2, and was deprecated since Python 3.1."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:618
+msgid "Unknown escapes consisting of ``'\\'`` and an ASCII letter in replacement templates for :func:`re.sub` were deprecated in Python 3.5, and will now cause an error."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:622
+msgid "Removed support of the *exclude* argument in :meth:`tarfile.TarFile.add`. It was deprecated in Python 2.7 and 3.2.  Use the *filter* argument instead."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:625
+msgid "The ``splitunc()`` function in the :mod:`ntpath` module was deprecated in Python 3.1, and has now been removed.  Use the :func:`~os.path.splitdrive` function instead."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:629
+msgid ":func:`collections.namedtuple` no longer supports the *verbose* parameter or ``_source`` attribute which showed the generated source code for the named tuple class.  This was part of an optimization designed to speed-up class creation.  (Contributed by Jelle Zijlstra with further improvements by INADA Naoki, Serhiy Storchaka, and Raymond Hettinger in :issue:`28638`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:635
+msgid "Functions :func:`bool`, :func:`float`, :func:`list` and :func:`tuple` no longer take keyword arguments.  The first argument of :func:`int` can now be passed only as positional argument."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:639
+msgid "Removed previously deprecated in Python 2.4 classes ``Plist``, ``Dict`` and ``_InternalDict`` in the :mod:`plistlib` module.  Dict values in the result of functions :func:`~plistlib.readPlist` and :func:`~plistlib.readPlistFromBytes` are now normal dicts.  You no longer can use attribute access to access items of these dictionaries."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:647
+msgid "Porting to Python 3.7"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:649
+msgid "This section lists previously described changes and other bugfixes that may require changes to your code."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:654
+msgid "Changes in Python behavior"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:656
+msgid "Due to an oversight, earlier Python versions erroneously accepted the following syntax::"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:664
+msgid "Python 3.7 now correctly raises a :exc:`SyntaxError`, as a generator expression always needs to be directly inside a set of parentheses and cannot have a comma on either side, and the duplication of the parentheses can be omitted only on calls. (Contributed by Serhiy Storchaka in :issue:`32012` and :issue:`32023`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:672
+msgid "Changes in the Python API"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:674
+msgid ":meth:`pkgutil.walk_packages` now raises ValueError if *path* is a string. Previously an empty list was returned. (Contributed by Sanyam Khurana in :issue:`24744`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:678
+msgid "A format string argument for :meth:`string.Formatter.format` is now :ref:`positional-only <positional-only_parameter>`. Passing it as a keyword argument was deprecated in Python 3.5. (Contributed by Serhiy Storchaka in :issue:`29193`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:683
+msgid "Attributes :attr:`~http.cookies.Morsel.key`, :attr:`~http.cookies.Morsel.value` and :attr:`~http.cookies.Morsel.coded_value` of class :class:`http.cookies.Morsel` are now read-only. Assigning to them was deprecated in Python 3.5. Use the :meth:`~http.cookies.Morsel.set` method for setting them. (Contributed by Serhiy Storchaka in :issue:`29192`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:691
+msgid "``Module``, ``FunctionDef``, ``AsyncFunctionDef``, and ``ClassDef`` AST nodes now have a new ``docstring`` field. The first statement in their body is not considered as a docstring anymore.  ``co_firstlineno`` and ``co_lnotab`` of code object for class and module are affected by this change. (Contributed by INADA Naoki and Eugene Toder in :issue:`29463`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:698
+msgid "The *mode* argument of :func:`os.makedirs` no longer affects the file permission bits of newly-created intermediate-level directories. To set their file permission bits you can set the umask before invoking ``makedirs()``. (Contributed by Serhiy Storchaka in :issue:`19930`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:704
+msgid "The :attr:`struct.Struct.format` type is now :class:`str` instead of :class:`bytes`. (Contributed by Victor Stinner in :issue:`21071`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:707
+msgid "Due to internal changes in :mod:`socket` you won't be able to :func:`socket.fromshare` a socket :func:`~socket.socket.share`-ed in older Python versions."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:711
+msgid "``repr`` for :class:`datetime.timedelta` has changed to include keyword arguments in the output. (Contributed by Utkarsh Upadhyay in :issue:`30302`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:714
+msgid "Because :func:`shutil.rmtree` is now implemented using the :func:`os.scandir` function, the user specified handler *onerror* is now called with the first argument ``os.scandir`` instead of ``os.listdir`` when listing the direcory is failed."
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:719
+msgid "Support of nested sets and set operations in regular expressions as in `Unicode Technical Standard #18`_ might be added in the future.  This would change the syntax, so to facilitate this change a :exc:`FutureWarning` will be raised in ambiguous cases for the time being. That include sets starting with a literal ``'['`` or containing literal character sequences ``'--'``, ``'&&'``, ``'~~'``, and ``'||'``.  To avoid a warning escape them with a backslash. (Contributed by Serhiy Storchaka in :issue:`30349`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:734
+msgid "The function :c:func:`PySlice_GetIndicesEx` is considered not safe for resizable sequences.  If the slice indices are not instances of :class:`int`, but objects that implement the :meth:`!__index__` method, the sequence can be resized after passing its length to :c:func:`!PySlice_GetIndicesEx`.  This can lead to returning indices out of the length of the sequence.  For avoiding possible problems use new functions :c:func:`PySlice_Unpack` and :c:func:`PySlice_AdjustIndices`. (Contributed by Serhiy Storchaka in :issue:`27867`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:745
+msgid "CPython bytecode changes"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:747
+msgid "Added two new opcodes: :opcode:`LOAD_METHOD` and :opcode:`CALL_METHOD`. (Contributed by Yury Selivanov and INADA Naoki in :issue:`26110`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:752
+msgid "Other CPython implementation changes"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:754
+msgid "In preparation for potential future changes to the public CPython runtime initialization API (see :pep:`432` for details), CPython's internal startup and configuration management logic has been significantly refactored. While these updates are intended to be entirely transparent to both embedding applications and users of the regular CPython CLI, they're being mentioned here as the refactoring changes the internal order of various operations during interpreter startup, and hence may uncover previously latent defects, either in embedding applications, or in CPython itself. (Contributed by Nick Coghlan and Eric Snow as part of :issue:`22257`.)"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:766
+msgid "Documentation"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:771
+msgid "PEP 545: Python Documentation Translations"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:773
+msgid ":pep:`545` describes the process to translate Python documentation, and two translations have been added:"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:776
+msgid "Japanese: https://docs.python.org/ja/ and associated GitHub repository: https://github.com/python/python-docs-ja"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:779
+msgid "French: https://docs.python.org/fr/ and associated GitHub repository: https://github.com/python/python-docs-fr"
+msgstr ""
+
+#: ../../whatsnew/3.7.rst:782
+msgid "(Contributed by Julien Palard, Inada Naoki, and Victor Stinner in :issue:`26546`.)"
+msgstr ""
+
