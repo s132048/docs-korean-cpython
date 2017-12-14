@@ -9,33 +9,31 @@
     :license: Python license.
 """
 
-import re
 import io
+import re
 from os import path
-from time import asctime
 from pprint import pformat
+from time import asctime
+
+import suspicious
+from docutils import nodes, utils
 from docutils.io import StringOutput
 from docutils.parsers.rst import Directive
 from docutils.utils import new_document
-
-from docutils import nodes, utils
-
 from sphinx import addnodes
 from sphinx.builders import Builder
+from sphinx.domains.python import PyModulelevel, PyClassmember
 from sphinx.locale import translators
 from sphinx.util.nodes import split_explicit_title
 from sphinx.writers.html import HTMLTranslator
-from sphinx.writers.text import TextWriter
 from sphinx.writers.latex import LaTeXTranslator
-from sphinx.domains.python import PyModulelevel, PyClassmember
+from sphinx.writers.text import TextWriter
 
 # Support for checking for suspicious markup
 
-import suspicious
-
 
 ISSUE_URI = 'https://bugs.python.org/issue%s'
-SOURCE_URI = 'https://github.com/python/cpython/tree/master/%s'
+SOURCE_URI = 'https://veranostech.github.io/docs-korean-cpython/tree/docs-korean/%s'
 
 # monkey-patch reST parser to disable alphabetic and roman enumerated lists
 from docutils.parsers.rst.states import Body

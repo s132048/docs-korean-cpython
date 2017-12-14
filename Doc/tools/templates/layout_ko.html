@@ -114,7 +114,7 @@
         <a href="https://www.python.org/psf/donations/">{% trans %}여러분의 기부가 필요합니다.{% endtrans %}</a>
         <br/>
         {% trans last_updated=last_updated|e %}{{ last_updated }}에 최종 갱신.{% endtrans %}
-        {% trans pathto_bugs=pathto('bugs') %}<a href="{{ pathto_bugs }}">버그 보고</a>?{% endtrans %}
+        {% trans pathto_bugs=pathto('bugs') %}<a href="{{ pathto_bugs }}">버그 보고</a>{% endtrans %}
         <br/>
         {% trans sphinx_version=sphinx_version|e %}<a href="http://sphinx.pocoo.org/">Sphinx</a>로 제작{{ sphinx_version }}
             .{% endtrans %}

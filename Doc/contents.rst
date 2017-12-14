@@ -7,8 +7,8 @@
    whatsnew/index.rst
    tutorial/index.rst
    using/index.rst
-   reference/index.rst
-   library/index.rst
+   reference/index_ko.rst
+   library/index_ko.rst
    extending/index.rst
    c-api/index.rst
    distributing/index.rst
