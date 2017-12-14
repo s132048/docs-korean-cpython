@@ -11,7 +11,8 @@
   <table class="contentstable" align="center"><tr>
     <td width="50%">
       <p class="biglink"><a class="biglink" href="{{ pathto("whatsnew/" + version) }}">{% trans %}파이썬 {{ version }}에 대한 새로운 사항{% endtrans %}</a><br/>
-        <span class="linkdescr"> {% trans whatsnew_index=pathto("whatsnew/index") %}or <a href="{{ whatsnew_index }}">2.0 이후의 모든 "변경사항" 문서</a> {% endtrans %}</span></p>
+          <span class="linkdescr"> {% trans whatsnew_index=pathto("whatsnew/index") %}
+              <a href="{{ whatsnew_index }}">2.0 이후의 모든 "변경사항" 문서</a> {% endtrans %}</span></p>
       <p class="biglink"><a class="biglink" href="{{ pathto("tutorial/index") }}">{% trans %}튜토리얼{% endtrans %}</a><br/>
          <span class="linkdescr">{% trans %}start here{% endtrans %}</span></p>
       <p class="biglink"><a class="biglink" href="{{ pathto("library/index") }}">{% trans %}라이브러리 참조서{% endtrans %}</a><br/>
