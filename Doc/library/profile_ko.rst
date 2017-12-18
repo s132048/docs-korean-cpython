@@ -14,35 +14,33 @@
 =============================
 
 .. index::
-   single: deterministic profiling
+   single: 결정론적 프로파일링
    single: profiling, deterministic
 
-:mod:`cProfile` and :mod:`profile` provide :dfn:`deterministic profiling` of
-Python programs. A :dfn:`profile` is a set of statistics that describes how
-often and for how long various parts of the program executed. These statistics
-can be formatted into reports via the :mod:`pstats` module.
+:mod:`cProfile`\ 와 :mod:`profile`\ 는 파이썬 프로그램을
+:dfn:`결정론적 프로파일링(deterministic profiling)`\ 하기 위한 것이다.
+A :dfn:`프로파일(profile)`\ 은 프로그램의 각 부분이 얼마나 자주, 그리고 얼마나 오랫동안
+실행되는지를 묘사한 통계 집합이다.
+이 통계는 :mod:`pstats`\ 모듈을 사용하여 리포트 형태로 만들 수 있다.
 
-The Python standard library provides two different implementations of the same
-profiling interface:
+파이썬 표준 라이브러리는 동일한 프로파일링 인터페이스를 가진 두 개의 다른 구현을 제공한다.:
 
-1. :mod:`cProfile` is recommended for most users; it's a C extension with
-   reasonable overhead that makes it suitable for profiling long-running
-   programs.  Based on :mod:`lsprof`, contributed by Brett Rosen and Ted
-   Czotter.
+1. :mod:`cProfile`\ 는 대부분의 사용자에게 추천한다.
+   오랫동안 실행되는 프로그램에 적합하도록 오버헤드를 줄인 C 익스텐션(extension)이다.
+   Brett Rosen과 Ted Czotter가 만든 :mod:`lsprof`\ 에 기반하고 있다.
 
-2. :mod:`profile`, a pure Python module whose interface is imitated by
-   :mod:`cProfile`, but which adds significant overhead to profiled programs.
-   If you're trying to extend the profiler in some way, the task might be easier
-   with this module.  Originally designed and written by Jim Roskind.
+2. :mod:`profile`\ 는 :mod:`cProfile`\ 의 인터페이스를 흉내낸 순수 파이썬 모듈로
+   프로그램에 추가되는 오버헤드가 크다.
+   프로파일러를 어떻게든 확장해보려고 할 때 이 모듈을 사용하면 일이 쉬워질 수 있다.
+   Jim Roskind가 설계하고 구현하였다.
 
 .. note::
 
-   The profiler modules are designed to provide an execution profile for a given
-   program, not for benchmarking purposes (for that, there is :mod:`timeit` for
-   reasonably accurate results).  This particularly applies to benchmarking
-   Python code against C code: the profilers introduce overhead for Python code,
-   but not for C-level functions, and so the C code would seem faster than any
-   Python one.
+   프로파일러 모듈은 주어진 프로그램의 실행 프로필을 제공하도록 설계된 것이지
+   벤치마킹 목적으로 만들어지지 않았다. (벤치마크용으로는 :mod:`timeit`\ 이 적합하다.)
+   특히 파이썬 코드와 C를 비교하여 벤치마킹할 경우, 프로파일러가 파이썬 코드에는
+   오버헤드를 주고 C-레벨 함수에는 영향이 없으므로 C 코드가 파이썬 코드보다 빠르게
+   보인다.
 
 
 .. _profile-instant:
@@ -496,10 +494,10 @@ Analysis of the profiler data is done using the :class:`~pstats.Stats` class.
 
 .. _deterministic-profiling:
 
-What Is Deterministic Profiling?
+What Is 결정론적 프로파일링?
 ================================
 
-:dfn:`Deterministic profiling` is meant to reflect the fact that all *function
+:dfn:`결정론적 프로파일링` is meant to reflect the fact that all *function
 call*, *function return*, and *exception* events are monitored, and precise
 timings are made for the intervals between these events (during which time the
 user's code is executing).  In contrast, :dfn:`statistical profiling` (which is
@@ -509,11 +507,11 @@ less overhead (as the code does not need to be instrumented), but provides only
 relative indications of where time is being spent.
 
 In Python, since there is an interpreter active during execution, the presence
-of instrumented code is not required to do deterministic profiling.  Python
+of instrumented code is not required to do 결정론적 프로파일링.  Python
 automatically provides a :dfn:`hook` (optional callback) for each event.  In
 addition, the interpreted nature of Python tends to add so much overhead to
-execution, that deterministic profiling tends to only add small processing
-overhead in typical applications.  The result is that deterministic profiling is
+execution, that 결정론적 프로파일링 tends to only add small processing
+overhead in typical applications.  The result is that 결정론적 프로파일링 is
 not that expensive, yet provides extensive run time statistics about the
 execution of a Python program.
 
