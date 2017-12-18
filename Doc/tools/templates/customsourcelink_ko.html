@@ -1,11 +1,11 @@
 {%- if show_source and has_source and sourcename %}
   <div role="note" aria-label="source link">
-    <h3>{{ _('This Page') }}</h3>
+    <h3>{{ _('이 페이지') }}</h3>
     <ul class="this-page-menu">
-      <li><a href="{{ pathto('bugs') }}">{% trans %}Report a Bug{% endtrans %}</a></li>
+      <li><a href="{{ pathto('bugs') }}">{% trans %}버그 보고{% endtrans %}</a></li>
       <li>
         <a href="https://github.com/VeranosTech/docs-korean-cpython/blob/gh-pages/Doc/{{ sourcename|replace('.rst.txt', '.rst') }}"
-            rel="nofollow">{{ _('Show Source') }}
+            rel="nofollow">{{ _('본문의 소스코드') }}
         </a>
       </li>
     </ul>

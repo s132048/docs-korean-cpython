@@ -1,0 +1,19 @@
+{#
+    basic/relations.html
+    ~~~~~~~~~~~~~~~~~~~~
+
+    Sphinx sidebar template: relation links.
+
+    :copyright: Copyright 2007-2017 by the Sphinx team, see AUTHORS.
+    :license: BSD, see LICENSE for details.
+#}
+{%- if prev %}
+  <h4>{{ _('이전 주제') }}</h4>
+  <p class="topless"><a href="{{ prev.link|e }}"
+                        title="{{ _('이전 장') }}">{{ prev.title }}</a></p>
+{%- endif %}
+{%- if next %}
+  <h4>{{ _('다음 주제') }}</h4>
+  <p class="topless"><a href="{{ next.link|e }}"
+                        title="{{ _('다음 장') }}">{{ next.title }}</a></p>
+{%- endif %}
