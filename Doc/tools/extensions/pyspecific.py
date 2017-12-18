@@ -33,7 +33,7 @@ from sphinx.writers.text import TextWriter
 
 
 ISSUE_URI = 'https://bugs.python.org/issue%s'
-SOURCE_URI = 'https://veranostech.github.io/docs-korean-cpython/tree/docs-korean/%s'
+SOURCE_URI = 'https://github.com/VeranosTech/docs-korean-cpython/tree/gh-pages/%s'
 
 # monkey-patch reST parser to disable alphabetic and roman enumerated lists
 from docutils.parsers.rst.states import Body
