@@ -1,25 +1,25 @@
-.. _extending-index:
+.. _extending-index_ko:
 
-##################################################
-  Extending and Embedding the Python Interpreter
-##################################################
+################################################################################
+  파이썬 인터프리터의 확장(extending)과 임베딩(embedding)
+################################################################################
 
-This document describes how to write modules in C or C++ to extend the Python
-interpreter with new modules.  Those modules can not only define new functions
-but also new object types and their methods.  The document also describes how
-to embed the Python interpreter in another application, for use as an extension
-language.  Finally, it shows how to compile and link extension modules so that
-they can be loaded dynamically (at run time) into the interpreter, if the
-underlying operating system supports this feature.
+이 문서는 C나 C++로 모듈을 작성하고 그 모듈로 파이썬 인터프리터를 확장하는 방법을
+설명한다. 모듈에서 새로운 함수를 정의하거나 새로운 객체 타입과 메서드를 정의할
+수도 있다.
+이 문서에서는 파이썬 인터프리터를 다른 애플리케이션에 임베딩(embedding)하는 법도
+설명한다.
+마지막으로 확장 모듈을 컴파일하고 링크하여 파이썬 인터프리터가 이 모듈을
+다이나믹하게 런타임 로딩하는 법(만약 운영체제가 이 기능을 제공한다면)도 보인다.
 
-This document assumes basic knowledge about Python.  For an informal
-introduction to the language, see :ref:`tutorial-index`.  :ref:`reference-index`
-gives a more formal definition of the language.  :ref:`library-index` documents
-the existing object types, functions and modules (both built-in and written in
-Python) that give the language its wide application range.
+이 문서에서는 여러분이 파이썬에 대한 기본 지식을 가지고 있다고 가정한다.
+파이썬 언어에 대한 소개는 :ref:`tutorial-index`\ 를 참조한다.
+좀 더 정확한 언어 정의는 :ref:`reference-index`\ 를 참조한다.
+:ref:`library-index` 문서는 현존하는 객체 타입과 함수, 그리고 모듈을
+(빌트인과 파이썬으로 씌여진 것 모두) 소개한다.
+이러한 기능로 인해 파이썬 언어는 폭넓은 응용 가능성을 가진다.
 
-For a detailed description of the whole Python/C API, see the separate
-:ref:`c-api-index`.
+파이썬/C API에 대한 자세한 설명은 별도의 :ref:`c-api-index` 문서를 참조한다.
 
 
 Recommended third party tools

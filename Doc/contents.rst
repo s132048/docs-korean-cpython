@@ -9,7 +9,7 @@
    using/index.rst
    reference/index_ko.rst
    library/index_ko.rst
-   extending/index.rst
+   extending/index_ko.rst
    c-api/index.rst
    distributing/index.rst
    installing/index.rst
