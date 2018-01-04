@@ -389,7 +389,7 @@ Set types
 
       These represent an immutable set.  They are created by the built-in
       :func:`frozenset` constructor.  As a frozenset is immutable and
-      :term:`hashable`, it can be used again as an element of another set, or as
+      :term:`해쉬가능(hashable)`, it can be used again as an element of another set, or as
       a dictionary key.
 
 Mappings
@@ -1335,7 +1335,7 @@ Basic customization
    see :func:`functools.total_ordering`.
 
    See the paragraph on :meth:`__hash__` for
-   some important notes on creating :term:`hashable` objects which support
+   some important notes on creating :term:`해쉬가능(hashable)` objects which support
    custom comparison operations and are usable as dictionary keys.
 
    There are no swapped-argument versions of these methods (to be used when the

@@ -1,29 +1,29 @@
 .. XXX: reference/datamodel and this have quite a few overlaps!
 
 
-.. _bltin-types:
+.. _bltin-types_ko:
 
 **************
-Built-in Types
+내장 자료형
 **************
 
-The following sections describe the standard types that are built into the
-interpreter.
+다음 절에서는 인터프리터에 내장된 표준 자료형을 설명한다.
 
 .. index:: pair: built-in; types
 
-The principal built-in types are numerics, sequences, mappings, classes,
-instances and exceptions.
+주요 내장 자료형으로는 수치(numerics), 시퀀스(sequence), 매핑(mapping), 클래스(classe),
+객체(instance), 그리고 예외(exception)가 있다.
 
-Some collection classes are mutable.  The methods that add, subtract, or
-rearrange their members in place, and don't return a specific item, never return
-the collection instance itself but ``None``.
+일부 콜렉션(collection) 클래스는 뮤터블(mutable) 자료형이다.
+해당 객체 내에서(in-place) 원소를 추가(add)하거나 삭제(substract)하거나
+재정렬(rearrange)하면서 특정한 원소를 반환하지 않는 메서드는
+해당 콜렉션 객체 자체를 반환하지 않고 ``None``\ 을 반환한다.
 
-Some operations are supported by several object types; in particular,
-practically all objects can be compared, tested for truth value, and converted
-to a string (with the :func:`repr` function or the slightly different
-:func:`str` function).  The latter function is implicitly used when an object is
-written by the :func:`print` function.
+일부 연산은 다수의 객체 자료형에 대해 지원된다.
+실질적으로 모든 객체는 비교 가능하고, 참/거진 진리값 테스트가 가능하며
+(:func:`repr` 함수나 이와 비슷한 :func:`str` 함수를 이용하면)
+문자열로 변환가능하다.
+:func:`str` 함수는 객체를 :func:`print` 함수로 쓸 때 자동으로 호출된다.
 
 
 .. _truth:
@@ -3806,12 +3806,12 @@ copying.
 
 .. _types-set:
 
-Set Types --- :class:`set`, :class:`frozenset`
-==============================================
+집합(Set) 자료형 --- :class:`set`, :class:`frozenset`
+===============================================================================
 
 .. index:: object: set
 
-A :dfn:`set` object is an unordered collection of distinct :term:`해쉬가능(hashable)` objects.
+:dfn:`set` 객체는 :term:`해쉬가능(hashable)` 객체의 정렬되지 않은(unordered) 콜렉션이다..
 Common uses include membership testing, removing duplicates from a sequence, and
 computing mathematical operations such as intersection, union, difference, and
 symmetric difference.

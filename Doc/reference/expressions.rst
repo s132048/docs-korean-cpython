@@ -291,7 +291,7 @@ in the new dictionary in the order they are produced.
            hashable
 
 Restrictions on the types of the key values are listed earlier in section
-:ref:`types`.  (To summarize, the key type should be :term:`hashable`, which excludes
+:ref:`types`.  (To summarize, the key type should be :term:`해쉬가능(hashable)`, which excludes
 all mutable objects.)  Clashes between duplicate keys are not detected; the last
 datum (textually rightmost in the display) stored for a given key value
 prevails.

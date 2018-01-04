@@ -32,7 +32,7 @@
    intro.rst
    functions.rst
    constants.rst
-   stdtypes.rst
+   stdtypes_ko.rst
    exceptions.rst
 
    text.rst

@@ -1002,7 +1002,7 @@ performance levels:
   much larger benefits than trying to sprinkle micro-optimization tricks
   all over your code.
 
-* Use the right data structures.  Study documentation for the :ref:`bltin-types`
+* Use the right data structures.  Study documentation for the :ref:`bltin-types_ko`
   and the :mod:`collections` module.
 
 * When the standard library provides a primitive for doing something, it is
@@ -1130,7 +1130,7 @@ list, deleting duplicates as you go::
                last = mylist[i]
 
 If all elements of the list may be used as set keys (i.e. they are all
-:term:`hashable`) this is often faster ::
+:term:`해쉬가능(hashable)`) this is often faster ::
 
    mylist = list(set(mylist))
 
