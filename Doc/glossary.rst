@@ -458,7 +458,7 @@ Glossary
       is believed that overcoming this performance issue would make the
       implementation much more complicated and therefore costlier to maintain.
 
-   hashable
+   해쉬가능(hashable)
       An object is *hashable* if it has a hash value which never changes during
       its lifetime (it needs a :meth:`__hash__` method), and can be compared to
       other objects (it needs an :meth:`__eq__` method).  Hashable objects which
