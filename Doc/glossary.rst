@@ -459,19 +459,20 @@ Glossary
       implementation much more complicated and therefore costlier to maintain.
 
    해쉬가능(hashable)
-      An object is *hashable* if it has a hash value which never changes during
-      its lifetime (it needs a :meth:`__hash__` method), and can be compared to
-      other objects (it needs an :meth:`__eq__` method).  Hashable objects which
-      compare equal must have the same hash value.
+      객체가 생애 주기동안 변하지 않는 해쉬값(hash value)을 가지고
+      (:meth:`__hash__` 메서드가 필요하다.) 다른 객체과 비교 가능하면
+      (:meth:`__eq__` 메서드가 필요하다.)
+       *해쉬가능(hashable)*\ 하다고 한다.
+      비교 결과가 동치(equal)로 나오는 해쉬가능 객체는 같은 해쉬값을 가져야 한다.
 
-      Hashability makes an object usable as a dictionary key and a set member,
-      because these data structures use the hash value internally.
+      객체가 해쉬가능하면 내부적으로 해쉬값을 이용하는 딕셔너리의 키(key)나 셋의 원소로
+      그 객체를 사용할 수 있다.
 
-      All of Python's immutable built-in objects are hashable; mutable
-      containers (such as lists or dictionaries) are not.  Objects which are
-      instances of user-defined classes are hashable by default.  They all
-      compare unequal (except with themselves), and their hash value is derived
-      from their :func:`id`.
+      모든 파이썬의 임뮤터블(immutable) 내장 객체는 해쉬가능하다.
+      (리스트나 딕셔너리와 같은) 뮤터블(immutable) 내장 객체는 해쉬가능하지 않다.
+      사용자가 정의한 클래스의 인스턴스 객체는 디폴트로 해쉬가능하다.
+      이러한 객체는 (자기 자신을 제외하고는) 모두 동치가 아니며 해쉬값은 :func:`id`\ 를
+      사용한다.
 
    IDLE
       An Integrated Development Environment for Python.  IDLE is a basic editor
