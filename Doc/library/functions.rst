@@ -602,7 +602,7 @@ are always available.  They are listed here in alphabetical order.
 
    Return a new :class:`frozenset` object, optionally with elements taken from
    *iterable*.  ``frozenset`` is a built-in class.  See :class:`frozenset` and
-   :ref:`types-set` for documentation about this class.
+   :ref:`types-set_ko` for documentation about this class.
 
    For other containers see the built-in :class:`set`, :class:`list`,
    :class:`tuple`, and :class:`dict` classes, as well as the :mod:`collections`
@@ -1343,7 +1343,7 @@ are always available.  They are listed here in alphabetical order.
 
    Return a new :class:`set` object, optionally with elements taken from
    *iterable*.  ``set`` is a built-in class.  See :class:`set` and
-   :ref:`types-set` for documentation about this class.
+   :ref:`types-set_ko` for documentation about this class.
 
    For other containers see the built-in :class:`frozenset`, :class:`list`,
    :class:`tuple`, and :class:`dict` classes, as well as the :mod:`collections`

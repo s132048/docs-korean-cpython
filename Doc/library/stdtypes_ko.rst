@@ -3804,7 +3804,7 @@ copying.
       .. versionadded:: 3.3
 
 
-.. _types-set:
+.. _types-set_ko:
 
 셋(Set) 자료형 --- :class:`set`, :class:`frozenset`
 ===============================================================================

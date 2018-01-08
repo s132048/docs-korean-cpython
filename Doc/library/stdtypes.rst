@@ -3804,7 +3804,7 @@ copying.
       .. versionadded:: 3.3
 
 
-.. _types-set:
+.. _types-set_ko:
 
 Set Types --- :class:`set`, :class:`frozenset`
 ==============================================
