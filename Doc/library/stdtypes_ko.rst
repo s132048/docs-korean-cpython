@@ -3806,109 +3806,104 @@ copying.
 
 .. _types-set:
 
-집합(Set) 자료형 --- :class:`set`, :class:`frozenset`
+셋(Set) 자료형 --- :class:`set`, :class:`frozenset`
 ===============================================================================
 
 .. index:: object: set
 
-:dfn:`set` 객체는 :term:`해쉬가능(hashable)` 객체의 정렬되지 않은(unordered) 콜렉션이다..
-Common uses include membership testing, removing duplicates from a sequence, and
-computing mathematical operations such as intersection, union, difference, and
-symmetric difference.
-(For other containers see the built-in :class:`dict`, :class:`list`,
-and :class:`tuple` classes, and the :mod:`collections` module.)
+:dfn:`set` 객체는 :term:`해쉬가능(hashable)` 객체의 정렬되지 않은(unordered) 콜렉션이다.
+소속(membership) 검사 뿐만 아니라 시퀀스에서 중복된 원소 제거하거나
+교집합, 합집합, 차집합, 대칭차집합을 계산할 때 사용한다.
+(다른 종류의 컨테이너에 대해서는 :class:`dict`, :class:`list`,
+:class:`tuple` 클래스와 :mod:`collections` 모듈을 참조한다.)
 
-Like other collections, sets support ``x in set``, ``len(set)``, and ``for x in
-set``.  Being an unordered collection, sets do not record element position or
-order of insertion.  Accordingly, sets do not support indexing, slicing, or
-other sequence-like behavior.
+다른 콜렉션과 마찬가지로 셋도 ``x in set``, ``len(set)``, ``for x in set`` 등을 지원한다.
+순서가 없는 콜렉션이기 때문에 원소의 위치나 삽입 순서 등을 기록하지 않는다.
+따라서 인덱싱, 슬라이싱 등의 시퀀스 자료형 동작을 지원하지 않는다.
 
-There are currently two built-in set types, :class:`set` and :class:`frozenset`.
-The :class:`set` type is mutable --- the contents can be changed using methods
-like :meth:`~set.add` and :meth:`~set.remove`.  Since it is mutable, it has no
-hash value and cannot be used as either a dictionary key or as an element of
-another set.  The :class:`frozenset` type is immutable and :term:`해쉬가능(hashable)` ---
-its contents cannot be altered after it is created; it can therefore be used as
-a dictionary key or as an element of another set.
+현재는 셋(:class:`set`)\ 과 프로즌셋(:class:`frozenset`), 두가지 내장 자료형이 있다.
+:class:`set` 자료형은 뮤터블(mutable)이다. 즉, :meth:`~set.add`\ 나 :meth:`~set.remove` 메서드로
+내용이 바뀔 수 있다.
+뮤터블이므로 해쉬값도 없고 딕셔너리의 키나 다른 셋의 원소로 사용할 수 없다.
+:class:`frozenset` 자료형은 임뮤터블(immutable)이고 :term:`해쉬가능(hashable)`\ 이다.
+즉, 일단 생성된 후에는 내용이 바뀔 수 없으나 딕셔너리의 키로 사용할 수 있고
+다른 셋의 원소가 될 수도 있다.
 
-Non-empty sets (not frozensets) can be created by placing a comma-separated list
-of elements within braces, for example: ``{'jack', 'sjoerd'}``, in addition to the
-:class:`set` constructor.
+비어있지 않는 (frozenset이 아닌) 셋은
+예를 들어 ``{'jack', 'sjoerd'}`` 처럼 중괄호(brace)와 쉼표로 생성할 수 있다.
+:class:`set` 생성자를 사용할 수도 있다.
 
-The constructors for both classes work the same:
+두 가지 클래스의 생성자는 같은 방식으로 동작한다.::
 
 .. class:: set([iterable])
            frozenset([iterable])
 
-   Return a new set or frozenset object whose elements are taken from
-   *iterable*.  The elements of a set must be :term:`해쉬가능(hashable)`.  To
-   represent sets of sets, the inner sets must be :class:`frozenset`
-   objects.  If *iterable* is not specified, a new empty set is
-   returned.
+   이터러블(iterable) 인수를 원소로 받아서 새로운 셋 혹은 프로즌셋 객체를 반환한다.
+   셋의 원소는 반드시 :term:`해쉬가능(hashable)`\ 이어야 한다.
+   셋의 셋을 표현할 때는 내부 셋은 :class:`frozenset` 객체야만된다.
+   만약 인수가 없으면 빈 셋을 반환한다.
 
-   Instances of :class:`set` and :class:`frozenset` provide the following
-   operations:
+   :class:`set`\ 과 :class:`frozenset` 클래스 객체는 다음 연산을 제공한다.
 
    .. describe:: len(s)
 
-      Return the number of elements in set *s* (cardinality of *s*).
+      셋 *s*\ 의 원소의 갯수(cardinality)를 반환한다.
 
    .. describe:: x in s
 
-      Test *x* for membership in *s*.
+      *x*\ 가 *s*\ 에 속하는지 검사한다.
 
    .. describe:: x not in s
 
-      Test *x* for non-membership in *s*.
+      *x*\ 가 *s*\ 에 속하지 않는지 검사한다.
 
    .. method:: isdisjoint(other)
 
-      Return ``True`` if the set has no elements in common with *other*.  Sets are
-      disjoint if and only if their intersection is the empty set.
+      만약 어떤 셋이 다른 셋과 디스조인트(disjoint)이면 ``True``\ 를 반환한다.
+      교집합이 공집합인 경우에 두 셋이 디스조인트(disjoint)라고 한다.
 
    .. method:: issubset(other)
                set <= other
 
-      Test whether every element in the set is in *other*.
+      어떤 셋의 모든 원소가 다른 셋에 존재하는지 검사한다. 즉 부분집합인지 검사한다.
 
    .. method:: set < other
 
-      Test whether the set is a proper subset of *other*, that is,
+      어떤 셋이 다른 셋의 진부분집합인지 검사한다. 즉,
       ``set <= other and set != other``.
 
    .. method:: issuperset(other)
                set >= other
 
-      Test whether every element in *other* is in the set.
+      다른(*other*) 셋이 어떤 셋의 부분집합인지 검사한다.
 
    .. method:: set > other
 
-      Test whether the set is a proper superset of *other*, that is, ``set >=
-      other and set != other``.
+      다른(*other*) 셋이 어떤 셋의 진부분집합인지 검사한다.
 
    .. method:: union(*others)
                set | other | ...
 
-      Return a new set with elements from the set and all others.
+      어떤 셋과 다른 셋들의 합집합을 반환한다.
 
    .. method:: intersection(*others)
                set & other & ...
 
-      Return a new set with elements common to the set and all others.
+      어떤 셋과 다른 셋들의 교집합을 반환한다.
 
    .. method:: difference(*others)
                set - other - ...
 
-      Return a new set with elements in the set that are not in the others.
+      어떤 셋에 속하지만 다른 셋에 속하지 않는 원소로 이루어진 집합(차집합)을 반환한다.
 
    .. method:: symmetric_difference(other)
                set ^ other
 
-      Return a new set with elements in either the set or *other* but not both.
+      하나의 셋에만 속하고 다른 셋에 속하지 않는 원소로 이루어진 집합(대칭차집합)을 반환한다.
 
    .. method:: copy()
 
-      Return a new set with a shallow copy of *s*.
+      *s*\ 의 셀로우카피(shallow copy)를 반환한다.
 
 
    Note, the non-operator versions of :meth:`union`, :meth:`intersection`,
