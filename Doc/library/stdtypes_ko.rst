@@ -3806,7 +3806,7 @@ copying.
 
 .. _types-set_ko:
 
-셋(Set) 자료형 --- :class:`set`, :class:`frozenset`
+집합(Set) 자료형 --- :class:`set`, :class:`frozenset`
 ===============================================================================
 
 .. index:: object: set
@@ -3817,19 +3817,19 @@ copying.
 (다른 종류의 컨테이너에 대해서는 :class:`dict`, :class:`list`,
 :class:`tuple` 클래스와 :mod:`collections` 모듈을 참조한다.)
 
-다른 콜렉션과 마찬가지로 셋도 ``x in set``, ``len(set)``, ``for x in set`` 등을 지원한다.
+다른 콜렉션과 마찬가지로 집합도 ``x in set``, ``len(set)``, ``for x in set`` 등을 지원한다.
 순서가 없는 콜렉션이기 때문에 원소의 위치나 삽입 순서 등을 기록하지 않는다.
 따라서 인덱싱, 슬라이싱 등의 시퀀스 자료형 동작을 지원하지 않는다.
 
-현재는 셋(:class:`set`)\ 과 프로즌셋(:class:`frozenset`), 두가지 내장 자료형이 있다.
+현재는 집합(:class:`set`)\ 과 프로즌셋(:class:`frozenset`), 두가지 내장 자료형이 있다.
 :class:`set` 자료형은 뮤터블(mutable)이다. 즉, :meth:`~set.add`\ 나 :meth:`~set.remove` 메서드로
 내용이 바뀔 수 있다.
-뮤터블이므로 해쉬값도 없고 딕셔너리의 키나 다른 셋의 원소로 사용할 수 없다.
+뮤터블이므로 해쉬값도 없고 딕셔너리의 키나 다른 집합의 원소로 사용할 수 없다.
 :class:`frozenset` 자료형은 임뮤터블(immutable)이고 :term:`해쉬가능(hashable)`\ 이다.
 즉, 일단 생성된 후에는 내용이 바뀔 수 없으나 딕셔너리의 키로 사용할 수 있고
-다른 셋의 원소가 될 수도 있다.
+다른 집합의 원소가 될 수도 있다.
 
-비어있지 않는 (frozenset이 아닌) 셋은
+비어있지 않는 (frozenset이 아닌) 집합은
 예를 들어 ``{'jack', 'sjoerd'}`` 처럼 중괄호(brace)와 쉼표로 생성할 수 있다.
 :class:`set` 생성자를 사용할 수도 있다.
 
@@ -3838,16 +3838,16 @@ copying.
 .. class:: set([iterable])
            frozenset([iterable])
 
-   이터러블(iterable) 인수를 원소로 받아서 새로운 셋 혹은 프로즌셋 객체를 반환한다.
-   셋의 원소는 반드시 :term:`해쉬가능(hashable)`\ 이어야 한다.
-   셋의 셋을 표현할 때는 내부 셋은 :class:`frozenset` 객체야만된다.
-   만약 인수가 없으면 빈 셋을 반환한다.
+   이터러블(iterable) 인수를 원소로 받아서 새로운 집합 혹은 프로즌셋 객체를 반환한다.
+   집합의 원소는 반드시 :term:`해쉬가능(hashable)`\ 이어야 한다.
+   집합의 집합을 표현할 때는 내부 집합은 :class:`frozenset` 객체야만된다.
+   만약 인수가 없으면 빈 집합을 반환한다.
 
    :class:`set`\ 과 :class:`frozenset` 클래스 객체는 다음 연산을 제공한다.
 
    .. describe:: len(s)
 
-      셋 *s*\ 의 원소의 갯수(cardinality)를 반환한다.
+      집합 *s*\ 의 원소의 갯수(cardinality)를 반환한다.
 
    .. describe:: x in s
 
@@ -3859,138 +3859,137 @@ copying.
 
    .. method:: isdisjoint(other)
 
-      만약 어떤 셋이 다른 셋과 디스조인트(disjoint)이면 ``True``\ 를 반환한다.
-      교집합이 공집합인 경우에 두 셋이 디스조인트(disjoint)라고 한다.
+      만약 어떤 집합이 다른 집합과 서로 소(disjoint)이면 ``True``\ 를 반환한다.
+      교집합이 공집합인 경우에 두 집합이 서로 소(disjoint)라고 한다.
 
    .. method:: issubset(other)
                set <= other
 
-      어떤 셋의 모든 원소가 다른 셋에 존재하는지 검사한다. 즉 부분집합인지 검사한다.
+      어떤 집합의 모든 원소가 다른 집합에 존재하는지 검사한다. 즉 부분집합인지 검사한다.
 
    .. method:: set < other
 
-      어떤 셋이 다른 셋의 진부분집합인지 검사한다. 즉,
+      어떤 집합이 다른 집합의 진부분집합인지 검사한다. 즉,
       ``set <= other and set != other``.
 
    .. method:: issuperset(other)
                set >= other
 
-      다른(*other*) 셋이 어떤 셋의 부분집합인지 검사한다.
+      다른(*other*) 집합이 어떤 집합의 부분집합인지 검사한다.
 
    .. method:: set > other
 
-      다른(*other*) 셋이 어떤 셋의 진부분집합인지 검사한다.
+      다른(*other*) 집합이 어떤 집합의 진부분집합인지 검사한다.
 
    .. method:: union(*others)
                set | other | ...
 
-      어떤 셋과 다른 셋들의 합집합을 반환한다.
+      어떤 집합과 다른 집합들의 합집합을 반환한다.
 
    .. method:: intersection(*others)
                set & other & ...
 
-      어떤 셋과 다른 셋들의 교집합을 반환한다.
+      어떤 집합과 다른 집합들의 교집합을 반환한다.
 
    .. method:: difference(*others)
                set - other - ...
 
-      어떤 셋에 속하지만 다른 셋에 속하지 않는 원소로 이루어진 집합(차집합)을 반환한다.
+      어떤 집합에 속하지만 다른 집합에 속하지 않는 원소로 이루어진 집합(차집합)을 반환한다.
 
    .. method:: symmetric_difference(other)
                set ^ other
 
-      하나의 셋에만 속하고 다른 셋에 속하지 않는 원소로 이루어진 집합(대칭차집합)을 반환한다.
+      하나의 집합에만 속하고 다른 집합에 속하지 않는 원소로 이루어진 집합(대칭차집합)을 반환한다.
 
    .. method:: copy()
 
       *s*\ 의 셀로우카피(shallow copy)를 반환한다.
 
 
-   Note, the non-operator versions of :meth:`union`, :meth:`intersection`,
-   :meth:`difference`, and :meth:`symmetric_difference`, :meth:`issubset`, and
-   :meth:`issuperset` methods will accept any iterable as an argument.  In
-   contrast, their operator based counterparts require their arguments to be
-   sets.  This precludes error-prone constructions like ``set('abc') & 'cbs'``
-   in favor of the more readable ``set('abc').intersection('cbs')``.
+   :meth:`union`, :meth:`intersection`, :meth:`difference`, :meth:`symmetric_difference`,
+   :meth:`issubset`, :meth:`issuperset` 메서드의 비-오퍼레이터(non-operator) 버전은 어떤 종류의 이터러블도
+   인수도 받을 수 있다. 반대로 오퍼레이터 버전은 반드시 인수가 집합 자료형이어야 한다.
+   따라서 ``set('abc') & 'cbs'``\ 처럼 오류가 발생하기 쉬운 코드는 불가능하고
+   더 가독성이 좋은 ``set('abc').intersection('cbs')``\ 만 가능하다.
 
-   Both :class:`set` and :class:`frozenset` support set to set comparisons. Two
-   sets are equal if and only if every element of each set is contained in the
-   other (each is a subset of the other). A set is less than another set if and
-   only if the first set is a proper subset of the second set (is a subset, but
-   is not equal). A set is greater than another set if and only if the first set
-   is a proper superset of the second set (is a superset, but is not equal).
+   :class:`set`, :class:`frozenset` 모두 집합-대-집합 비교(comparison) 연산을 지원한다.
+   두 집합에서 어느 하나의 집합에 있는 모든 원소가 다른 집합에도 있을 때(두 집합이 서로의 부분집합일 때)만
+   두 집합은 동치(equal)이다.
+   한 집합이 다른 집합의 진부분집합이면 그 집합은 다른 집합보다 작다(less).
+   반대로 다른 집합이 그 집합의 진부분집합이면 그 집합은 다른 집합보다 크다(greater).
 
-   Instances of :class:`set` are compared to instances of :class:`frozenset`
-   based on their members.  For example, ``set('abc') == frozenset('abc')``
-   returns ``True`` and so does ``set('abc') in set([frozenset('abc')])``.
+   :class:`set` 클래스 인스턴스는 :class:`frozenset` 클래스 인스턴스와 비교할 수 있다.
+   예를 들어 ``set('abc') == frozenset('abc')``\ 의 값은 ``True``\ 이고
+   ``set('abc') in set([frozenset('abc')])``\ 의 값도 ``True``\ 이다.
 
-   The subset and equality comparisons do not generalize to a total ordering
-   function.  For example, any two nonempty disjoint sets are not equal and are not
-   subsets of each other, so *all* of the following return ``False``: ``a<b``,
-   ``a==b``, or ``a>b``.
+   부분집합과 동치 비교는 완전순서(total ordering) 함수가 아니다.
+   예를 들어 서로 소이며 공집합이 아닌 임의의 두 집합은 동치일 수 없으며
+   서로 부분집합도 아니다. 따라서 다음 식의 값은 모두 ``False``\ 이다.:
+   ``a<b``, ``a==b``, ``a>b``.
 
-   Since sets only define partial ordering (subset relationships), the output of
-   the :meth:`list.sort` method is undefined for lists of sets.
+   집합에서는 부분집합 관계와 같은 부분순서(partial ordering)만 정의되므로
+   집합의 리스트에 대해서는 :meth:`list.sort` 메서드의 출력이 정의되지 않는다.
 
-   Set elements, like dictionary keys, must be :term:`해쉬가능(hashable)`.
+   딕셔너리의 키처럼 집합의 원소도 반드시 :term:`해쉬가능(hashable)`\ 이어야 한다.
 
-   Binary operations that mix :class:`set` instances with :class:`frozenset`
-   return the type of the first operand.  For example: ``frozenset('ab') |
-   set('bc')`` returns an instance of :class:`frozenset`.
+   :class:`set` 인스턴스와 :class:`frozenset` 인스턴스의 이진 연산은
+   앞에 있는 피연산자의 자료형을 반환한다.
+   예를 들어 ``frozenset('ab') | set('bc')``\ 은 :class:`frozenset` 인스턴스를 반환한다.
 
-   The following table lists operations available for :class:`set` that do not
-   apply to immutable instances of :class:`frozenset`:
+   다음 표는 :class:`set`\ 에서 가능하고 :class:`frozenset`\ 에서는 불가능한 연산 목록이다.:
 
    .. method:: update(*others)
                set |= other | ...
 
-      Update the set, adding elements from all others.
+      집합에 다른 집합의 모든 원소를 추가하여 갱신한다.
 
    .. method:: intersection_update(*others)
                set &= other & ...
 
-      Update the set, keeping only elements found in it and all others.
+      집합이 다른 집합들과의 교집합이 되도록 갱신한다.
 
    .. method:: difference_update(*others)
                set -= other | ...
 
-      Update the set, removing elements found in others.
+      집합으로부터 다른 집합들과의 차집합 원소를 제거하여 갱신한다.
 
    .. method:: symmetric_difference_update(other)
                set ^= other
 
-      Update the set, keeping only elements found in either set, but not in both.
+      어느 하나의 집합에만 속한 원소로 집합을 갱신한다.
 
    .. method:: add(elem)
 
-      Add element *elem* to the set.
+      원소 *elem*\ 를 집합에 추가한다.
 
    .. method:: remove(elem)
 
-      Remove element *elem* from the set.  Raises :exc:`KeyError` if *elem* is
-      not contained in the set.
+      원소 *elem*\ 를 집합으로부터 제거한다.
+      만약 원소 *elem*\ 가 집합에 속하지 않으면 :exc:`KeyError` 예외를 발생시킨다.
 
    .. method:: discard(elem)
 
-      Remove element *elem* from the set if it is present.
+      원소 *elem*\ 가 집합에 존재하는 경우에만 집합에서 제거한다.
 
    .. method:: pop()
 
-      Remove and return an arbitrary element from the set.  Raises
-      :exc:`KeyError` if the set is empty.
+      집합에서 임의의 원소를 제거하고 반환한다.
+      만약 집합이 공집합이면 :exc:`KeyError` 예뢰를 발생시킨다.
 
    .. method:: clear()
 
-      Remove all elements from the set.
+      집합에서 모든 원소를 제거한다.
 
 
-   Note, the non-operator versions of the :meth:`update`,
-   :meth:`intersection_update`, :meth:`difference_update`, and
-   :meth:`symmetric_difference_update` methods will accept any iterable as an
-   argument.
 
-   Note, the *elem* argument to the :meth:`__contains__`, :meth:`remove`, and
-   :meth:`discard` methods may be a set.  To support searching for an equivalent
+   :meth:`update`,
+   :meth:`intersection_update`,
+   :meth:`difference_update`,
+   :meth:`symmetric_difference_update` 메서드의 비-연산자 버전은 인수로 이터러블만 받는다.
+
+   :meth:`__contains__`, :meth:`remove`, :meth:`discard`\ 의 *elem* 인수는 집합일 수도 있다.
+
+   To support searching for an equivalent
    frozenset, a temporary one is created from *elem*.
 
 
