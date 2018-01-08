@@ -3833,7 +3833,7 @@ copying.
 예를 들어 ``{'jack', 'sjoerd'}`` 처럼 중괄호(brace)와 쉼표로 생성할 수 있다.
 :class:`set` 생성자를 사용할 수도 있다.
 
-두 가지 클래스의 생성자는 같은 방식으로 동작한다.::
+두 가지 클래스의 생성자는 같은 방식으로 동작한다.:
 
 .. class:: set([iterable])
            frozenset([iterable])
