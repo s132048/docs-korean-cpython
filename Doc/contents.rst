@@ -15,7 +15,7 @@
    installing/index.rst
    howto/index.rst
    faq/index.rst
-   glossary.rst
+   glossary_ko.rst
 
    about.rst
    bugs.rst
