@@ -45,7 +45,7 @@
    archiving.rst
    fileformats.rst
    crypto.rst
-   allos.rst
+   allos_ko.rst
    concurrency.rst
    ipc.rst
    netdata.rst
