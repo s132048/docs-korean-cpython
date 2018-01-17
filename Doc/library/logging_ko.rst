@@ -43,150 +43,131 @@
 
 .. _logger:
 
-Logger Objects
---------------
+로거(Logger) 객체
+-----------------------------------
 
-Loggers have the following attributes and methods.  Note that Loggers are never
-instantiated directly, but always through the module-level function
-``logging.getLogger(name)``.  Multiple calls to :func:`getLogger` with the same
-name will always return a reference to the same Logger object.
+로거는 다음 속성과 메서드를 가진다.
+로거 인스턴스는 직접 생성하지 않고 모듈레벨 함수인 ``logging.getLogger(name)``\ 를 이용한다.
+:func:`getLogger` 함수는 같은 이름으로 여러번 호출해도 동일한 로거 객체에 대한 참조를 반환한다.
 
-The ``name`` is potentially a period-separated hierarchical value, like
-``foo.bar.baz`` (though it could also be just plain ``foo``, for example).
-Loggers that are further down in the hierarchical list are children of loggers
-higher up in the list.  For example, given a logger with a name of ``foo``,
-loggers with names of ``foo.bar``, ``foo.bar.baz``, and ``foo.bam`` are all
-descendants of ``foo``.  The logger name hierarchy is analogous to the Python
-package hierarchy, and identical to it if you organise your loggers on a
-per-module basis using the recommended construction
-``logging.getLogger(__name__)``.  That's because in a module, ``__name__``
-is the module's name in the Python package namespace.
+``name`` 인수는 ``foo.bar.baz``\ 처럼 마침표(period)를 포함하는 계층적인 문자열을 쓸 수 있다.
+(물론 그냥 ``foo``\ 라고 써도 된다.)
+계층적 리스트에서 뒷쪽(하위)에 있는 로거는 앞쪽(상위)의 로거의 자식 로거가 된다.
+예를 들어 ``foo``\ 라는 로거가 있으면 ``foo.bar``, ``foo.bar.baz``, ``foo.bam``\ 는
+모두 ``foo`` 로거의 자식 로거이다.
+로거 이름의 계층 구조는 파이썬 패키지 구조와 유사하다.
+``logging.getLogger(__name__)`` 코드를 이용하여 로거를 만들면
+``__name__``\ 가 파이썬 패키지 이름 공간에서 모듈의 이름이 되기 때문에
+파이썬 패키지와 완전히 동일한 로거 구조가 만들어진다.
 
 
 .. class:: Logger
 
    .. attribute:: Logger.propagate
 
-      If this attribute evaluates to true, events logged to this logger will be
-      passed to the handlers of higher level (ancestor) loggers, in addition to
-      any handlers attached to this logger. Messages are passed directly to the
-      ancestor loggers' handlers - neither the level nor filters of the ancestor
-      loggers in question are considered.
+      이 속성값이 참이면 이 로거에 기록된 이벤트는 상위 레벨(조상) 로거의 핸들러나 연결된 모든 핸들러로
+      전달된다. 메세지는 조상 로거의 핸들러로 직접 전달된다. 조상 로거의 레벨이나 필터는 상관하지 않는다.
 
-      If this evaluates to false, logging messages are not passed to the handlers
-      of ancestor loggers.
+      만약 이 속성값이 거짓이면 로깅 메세지는 조상 로거의 핸들러에 전달되지 않는다.
 
-      The constructor sets this attribute to ``True``.
+      이 속성은 생성자에서 ``True``\ 으로 설정된다.
 
-      .. note:: If you attach a handler to a logger *and* one or more of its
-         ancestors, it may emit the same record multiple times. In general, you
-         should not need to attach a handler to more than one logger - if you just
-         attach it to the appropriate logger which is highest in the logger
-         hierarchy, then it will see all events logged by all descendant loggers,
-         provided that their propagate setting is left set to ``True``. A common
-         scenario is to attach handlers only to the root logger, and to let
-         propagation take care of the rest.
+      .. note:: 같은 핸들러를 어떤 로거와 그 조상 로거에 동시에 붙이면 같은 레코드를 여러번 받을 수 있다.
+         일반적으로 핸들러는 두 개 이상의 로거에 붙이지 않는다.
+         핸들러를 로거 계층 상의 어떤 상위 로거에 붙이면 propagate 설정이 ``True``\ 인 한,
+         모든 하위 로거의 이벤트는 모두 볼 수 있다.
+         일반적으로는 핸들러를 루트 로거에만 붙이고 다른 로거가 propagate하도록 한다.
 
    .. method:: Logger.setLevel(lvl)
 
-      Sets the threshold for this logger to *lvl*. Logging messages which are less
-      severe than *lvl* will be ignored; logging messages which have severity *lvl*
-      or higher will be emitted by whichever handler or handlers service this logger,
-      unless a handler's level has been set to a higher severity level than *lvl*.
+      로거의 레벨 설정값을 *lvl*\ 로 지정한다. *lvl*\ 보다 덜 중요한 로깅 메세지는 무시된다.
+      중요도(severity)가 *lvl*\ 과 같거나 큰 로깅 메세지만 이 로거를 담당하는 핸들러에서 처리된다.
+      핸들러의 레벨이 *lvl*\ 보다 높으면 처리되지 않는다.
+
+      로거를 생성할 때 레벨은 :const:`NOTSET`\ 로 설정된다. (이렇게 하면
+      로거가 루트 로거일 때 모든 메세지가 처리된다.)
+      루트 로거는 :const:`WARNING` 레벨로 생성된다는 점에 유의한다.
 
       When a logger is created, the level is set to :const:`NOTSET` (which causes
       all messages to be processed when the logger is the root logger, or delegation
       to the parent when the logger is a non-root logger). Note that the root logger
       is created with level :const:`WARNING`.
 
-      The term 'delegation to the parent' means that if a logger has a level of
-      NOTSET, its chain of ancestor loggers is traversed until either an ancestor with
-      a level other than NOTSET is found, or the root is reached.
+      어떤 로거가 NOTSET 레벨이고 그 조상 로거들을 거슬러 올라가면서 레벨이 NOTSET이 아닌
+      조상 로거를 만나거나 루트 로거를 만나기 전까지의 조상 로거들을 delegation이라고 한다.
 
-      If an ancestor is found with a level other than NOTSET, then that ancestor's
-      level is treated as the effective level of the logger where the ancestor search
-      began, and is used to determine how a logging event is handled.
+      만약 NOTSET 레벨이 아닌 조상 로거를 발견하면 그 조상 로거의 레벨이 해당 로거의 실질적인
+      레벨이 되고 로깅 이벤트를 처리하는 기준이 된다.
 
-      If the root is reached, and it has a level of NOTSET, then all messages will be
-      processed. Otherwise, the root's level will be used as the effective level.
+      만약 루트 로거까지 거슬러 올라가게 되었는데 루트 로거의 레벨이 NOTSET이면 모든 메세지가 처리된다.
+      레벨이 NOTSET이 아니면 루트 로거의 레벨이 실질 레벨로 사용된다.
 
-      See :ref:`levels` for a list of levels.
+      레벨 목록은 :ref:`levels`\ 를 참조한다.
 
-      .. versionchanged:: 3.2
-         The *lvl* parameter now accepts a string representation of the
-         level such as 'INFO' as an alternative to the integer constants
-         such as :const:`INFO`. Note, however, that levels are internally stored
-         as integers, and methods such as e.g. :meth:`getEffectiveLevel` and
-         :meth:`isEnabledFor` will return/expect to be passed integers.
-
+\      .. versionchanged:: 3.2
+         *lvl* 파라미터로 :const:`INFO`\ 에 해당하는 정수 상수 대신 문자열 'INFO'\ 를 쓸 수 있다.
+         하지만 내부적으로는 정수로 저장되며 :meth:`getEffectiveLevel`, :meth:`isEnabledFor` 메서드 등은
+         여전히 정수 인수를 반환하거나 받는다는 점에 주의 한다.
 
    .. method:: Logger.isEnabledFor(lvl)
 
-      Indicates if a message of severity *lvl* would be processed by this logger.
-      This method checks first the module-level level set by
-      ``logging.disable(lvl)`` and then the logger's effective level as determined
-      by :meth:`getEffectiveLevel`.
-
+      이 로거가 중요도 레벨이 *lvl*\ 인 메세지를 처리할 수 있는지 여부.
+      ``logging.disable(lvl)``\ 로 설정된 모듈수준에서의 레벨을 우선 확인하고
+      :meth:`getEffectiveLevel`\ 로 실질 리벨을 확인한다.
 
    .. method:: Logger.getEffectiveLevel()
 
-      Indicates the effective level for this logger. If a value other than
-      :const:`NOTSET` has been set using :meth:`setLevel`, it is returned. Otherwise,
-      the hierarchy is traversed towards the root until a value other than
-      :const:`NOTSET` is found, and that value is returned. The value returned is
-      an integer, typically one of :const:`logging.DEBUG`, :const:`logging.INFO`
-      etc.
-
+      이 로거의 실질 레벨을 가리킨다. 만약 :meth:`setLevel`\ 로 :const:`NOTSET`\ 이 아닌 값이 설정되었으면
+      그 값을 반환한다.
+      그렇지 않으면 루트 로거까지 상위 로거를 추적하여 :const:`NOTSET`\ 이 아닌 값을 찾아서 반환한다.
+      반환되는 값은 정수이며 보통 :const:`logging.DEBUG`, :const:`logging.INFO` 등이다.
 
    .. method:: Logger.getChild(suffix)
 
-      Returns a logger which is a descendant to this logger, as determined by the suffix.
-      Thus, ``logging.getLogger('abc').getChild('def.ghi')`` would return the same
-      logger as would be returned by ``logging.getLogger('abc.def.ghi')``. This is a
-      convenience method, useful when the parent logger is named using e.g. ``__name__``
-      rather than a literal string.
+      이 로거의 자손 로거 중에서 suffix를 가진 로거를 반환한다.
+      예를 들어 ``logging.getLogger('abc').getChild('def.ghi')`` 명령은
+      ``logging.getLogger('abc.def.ghi')`` 명령과 같은 로거를 반환한다.
+      부모 로거의 이름이 ``__name__``\ 처럼 리터럴 문자열이 아닐 때 편리하다.
 
       .. versionadded:: 3.2
 
-
    .. method:: Logger.debug(msg, *args, **kwargs)
 
-      Logs a message with level :const:`DEBUG` on this logger. The *msg* is the
-      message format string, and the *args* are the arguments which are merged into
-      *msg* using the string formatting operator. (Note that this means that you can
-      use keywords in the format string, together with a single dictionary argument.)
+      :const:`DEBUG` 레벨의 메세지를 기록한다. *msg*\ 는 메세지 형식의 문자열이고
+      *args*\ 는 문자열 형식화 연산자를 사용하여 *msg*\ 와 결합될 수 있는 인수들이다.
+      (따라서 딕셔너리 자료형의 인수와 키워드를 사용하는 형식화 문자열도 쓸 수 있다.)
 
-      There are three keyword arguments in *kwargs* which are inspected:
-      *exc_info*, *stack_info*, and *extra*.
+      *kwargs*\ 에는 *exc_info*, *stack_info*,  *extra*\ 라는 세 가지 키워드 인수를 사용한다.
 
-      If *exc_info* does not evaluate as false, it causes exception information to be
-      added to the logging message. If an exception tuple (in the format returned by
-      :func:`sys.exc_info`) or an exception instance is provided, it is used;
-      otherwise, :func:`sys.exc_info` is called to get the exception information.
+      *exc_info*\ 가 거짓이 아니면 로그 메세지에 예외 정보가 추가된다.
+      만약 (:func:`sys.exc_info`\ 가 반환하는 형식의) 예외 튜플 또는 예외 인스턴스가 주어지면
+      이를 직접 사용하고 그렇지 않으면 예외 정보를 얻기 위해 :func:`sys.exc_info`\ 를 호출한다.
 
-      The second optional keyword argument is *stack_info*, which defaults to
-      ``False``. If true, stack information is added to the logging
-      message, including the actual logging call. Note that this is not the same
-      stack information as that displayed through specifying *exc_info*: The
+      두번째 키워드 인수인 *stack_info*\ 는 디폴트로 ``False`` 값을 가진다.
+      만약 이 값이 참이면 로그 메세지에 실제 로그 호출을 포함한 스택 정보가 더해진다.
+      이 정보는 *exc_info*\ 를 지정했을 때 표시되는 스택 정보와는 다르다.
+      *exc_info*\ 를 지정한 경우에는 현재 쓰레드에서 스택의 바닥부터 로그 호출까지의 정보이지만
+      *stack_info*\ 는 예외 핸들러를 찾으면서 나온 예외들을 말한다.
+
+      The
       former is stack frames from the bottom of the stack up to the logging call
       in the current thread, whereas the latter is information about stack frames
       which have been unwound, following an exception, while searching for
       exception handlers.
 
-      You can specify *stack_info* independently of *exc_info*, e.g. to just show
-      how you got to a certain point in your code, even when no exceptions were
-      raised. The stack frames are printed following a header line which says::
+      *stack_info*\ 와 *exc_info*\ 는 각각 독립적으로 설정할 수 있으므로
+      심지어는 예외가 발생하지 않은 경우에도
+      코드의 특정 부분을 보여줄 수 있다.
+      스택프레임이 인쇄될 때는 첫머리에 다음과 같이 나온다.::
 
           Stack (most recent call last):
 
-      This mimics the ``Traceback (most recent call last):`` which is used when
-      displaying exception frames.
+      이것은 예외 프레임을 표시할 때 나오는 ``Traceback (most recent call last):``\ 를
+      흉내낸 것이다.
 
-      The third keyword argument is *extra* which can be used to pass a
-      dictionary which is used to populate the __dict__ of the LogRecord created for
-      the logging event with user-defined attributes. These custom attributes can then
-      be used as you like. For example, they could be incorporated into logged
-      messages. For example::
+      세번쩨 키워드 인수인 *extra*\ 는 LogRecord의 __dict__ 딕셔너리를 만드는 정보를
+      딕셔너리로 넘겨 사용자가 정의한 속성을 가진 로그 이벤트를 만들 수 있다.
+      이런 사용자 지정 속성은 로그 메세지와 결합되어 여러가지로 쓰일 수 있다. 예를 들어::
 
          FORMAT = '%(asctime)-15s %(clientip)s %(user)-8s %(message)s'
          logging.basicConfig(format=FORMAT)
@@ -194,33 +175,32 @@ is the module's name in the Python package namespace.
          logger = logging.getLogger('tcpserver')
          logger.warning('Protocol problem: %s', 'connection reset', extra=d)
 
-      would print something like  ::
+      는 다음과 같은 메세지를 출력한다.::
 
          2006-02-08 22:20:02,165 192.168.0.1 fbloggs  Protocol problem: connection reset
 
-      The keys in the dictionary passed in *extra* should not clash with the keys used
-      by the logging system. (See the :class:`Formatter` documentation for more
-      information on which keys are used by the logging system.)
+      *extra*\ 로 넘기는 딕셔너리의 키는 로그 시스템에서 사용하는 키와 충돌하지 않아야 한다.
+      (로그 시스템에서 쓰이는 키에 대해서는 :class:`Formatter` 참조.)
 
-      If you choose to use these attributes in logged messages, you need to exercise
-      some care. In the above example, for instance, the :class:`Formatter` has been
-      set up with a format string which expects 'clientip' and 'user' in the attribute
-      dictionary of the LogRecord. If these are missing, the message will not be
-      logged because a string formatting exception will occur. So in this case, you
-      always need to pass the *extra* dictionary with these keys.
+      만약 이 속성들을 로그 메세지에 사용하기로 했다면 주의를 기울여야 한다.
+      예를 드렁 위의 예제 코드에서 :class:`Formatter`\ 는
+      LogRecord의 속성 딕셔너리 중 'clientip', 'user'\ 를 사용하여 문자열을 만드는 것으로
+      되어 있다.
+      만약 이 값들이 없으면 문자열 형식화 예외가 발생해서 전체 메세지가 기록되지 않는다.
+      따라서 이때는 항상 *extra* 딕셔너리 값에 이 키들을 넣어서 전달해야 한다.
 
-      While this might be annoying, this feature is intended for use in specialized
-      circumstances, such as multi-threaded servers where the same code executes in
-      many contexts, and interesting conditions which arise are dependent on this
-      context (such as remote client IP address and authenticated user name, in the
-      above example). In such circumstances, it is likely that specialized
-      :class:`Formatter`\ s would be used with particular :class:`Handler`\ s.
+      이게 귀찮을 수도 있지만
+      이 기능은 코드가 복수의 컨텍스트에서 실행되는 멀티쓰레드 서버라든가
+      (리모트 IP 주소와 인증된 사용자 이름 등과 같이) 컨텍스트 의존적인 조건을
+      다루는 특수한 경우를 위해 만들어진 기능이다.
+      이런 경우에는 보통 특별한 :class:`Formatter`\ 들을 :class:`Handler`\ 와 같이
+      사용한다.
 
       .. versionadded:: 3.2
-         The *stack_info* parameter was added.
+         *stack_info* 파라미터 추가.
 
       .. versionchanged:: 3.5
-         The *exc_info* parameter can now accept exception instances.
+         *exc_info* 파라미터가 예외 인스턴스를 받을 수 있음.
 
 
    .. method:: Logger.info(msg, *args, **kwargs)
@@ -328,7 +308,7 @@ is the module's name in the Python package namespace.
 
 .. _levels:
 
-Logging Levels
+로깅 레벨
 --------------
 
 The numeric values of logging levels are given in the following table. These are
@@ -356,8 +336,8 @@ name is lost.
 
 .. _handler:
 
-Handler Objects
----------------
+핸들러(Handler) 객체
+--------------------------------------
 
 Handlers have the following attributes and methods. Note that :class:`Handler`
 is never instantiated directly; this class acts as a base for more useful
@@ -477,8 +457,8 @@ For a list of handlers included as standard, see :mod:`logging.handlers`.
 
 .. _formatter-objects:
 
-Formatter Objects
------------------
+포매터(Formatter) 객체
+-------------------------------------
 
 .. currentmodule:: logging
 
@@ -586,8 +566,8 @@ The useful mapping keys in a :class:`LogRecord` are given in the section on
 
 .. _filter:
 
-Filter Objects
---------------
+필터(Filter) 객체
+----------------------------
 
 ``Filters`` can be used by ``Handlers`` and ``Loggers`` for more sophisticated
 filtering than is provided by levels. The base filter class only allows events
@@ -641,8 +621,8 @@ into logs (see :ref:`filters-contextual`).
 
 .. _log-record:
 
-LogRecord Objects
------------------
+로그레코드(LogRecord) 객체
+----------------------------------
 
 :class:`LogRecord` instances are created automatically by the :class:`Logger`
 every time something is logged, and can be created manually via
@@ -716,8 +696,8 @@ wire).
 
 .. _logrecord-attributes:
 
-LogRecord attributes
---------------------
+로그레코드(LogRecord) 속성
+----------------------------------------
 
 The LogRecord has a number of attributes, most of which are derived from the
 parameters to the constructor. (Note that the names do not always correspond
@@ -819,8 +799,8 @@ the options available to you.
 
 .. _logger-adapter:
 
-LoggerAdapter Objects
----------------------
+로거어댑터(LoggerAdapter) 객체
+------------------------------------------
 
 :class:`LoggerAdapter` instances are used to conveniently pass contextual
 information into logging calls. For a usage example, see the section on
@@ -854,8 +834,8 @@ interchangeably.
    to :class:`LoggerAdapter`.  These methods delegate to the underlying logger.
 
 
-Thread Safety
--------------
+쓰레드 안전성
+--------------------------
 
 The logging module is intended to be thread-safe without any special work
 needing to be done by its clients. It achieves this though using threading
@@ -868,7 +848,7 @@ because lock implementations in the :mod:`threading` module are not always
 re-entrant, and so cannot be invoked from such signal handlers.
 
 
-Module-Level Functions
+모듈레벨 함수
 ----------------------
 
 In addition to the classes described above, there are a number of module- level
@@ -1206,7 +1186,7 @@ functions.
       :kwargs: Additional keyword arguments.
 
 
-Module-Level Attributes
+모듈레벨 속성
 -----------------------
 
 .. attribute:: lastResort
@@ -1221,7 +1201,7 @@ Module-Level Attributes
 
    .. versionadded:: 3.2
 
-Integration with the warnings module
+warnings 모듈과의 통합
 ------------------------------------
 
 The :func:`captureWarnings` function can be used to integrate :mod:`logging`

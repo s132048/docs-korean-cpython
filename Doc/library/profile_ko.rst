@@ -45,24 +45,21 @@ A :dfn:`프로파일(profile)`\ 은 프로그램의 각 부분이 얼마나 자�
 
 .. _profile-instant:
 
-Instant User's Manual
-=====================
+즉석 사용자 매뉴얼
+==========================================
 
-This section is provided for users that "don't want to read the manual." It
-provides a very brief overview, and allows a user to rapidly perform profiling
-on an existing application.
+이 절은 매뉴얼 전체를 읽고 싶어하지 않은 사용자를 위한 절이다.
+아주 간단한 개요만 제공하고 지금 있는 애플리케이션을 일단 프로파일링해 볼 수 있도록 한다.
 
-To profile a function that takes a single argument, you can do::
+인수를 하나만 가지는 함수를 프로파일링하려면 다음처럼 한다.::
 
    import cProfile
    import re
    cProfile.run('re.compile("foo|bar")')
 
-(Use :mod:`profile` instead of :mod:`cProfile` if the latter is not available on
-your system.)
+(만약 시스템에서 :mod:`cProfile`\ 가 동작하지않으면 대신 :mod:`profile`\ 를 쓸 수 있다.)
 
-The above action would run :func:`re.compile` and print profile results like
-the following::
+위와 같이 :func:`re.compile`\ 를 실행하면 다음처럼 프로파일 결과를 출력한다::
 
          197 function calls (192 primitive calls) in 0.002 seconds
 
@@ -77,64 +74,58 @@ the following::
         4    0.000    0.000    0.000    0.000 sre_compile.py:25(_identityfunction)
       3/1    0.000    0.000    0.000    0.000 sre_compile.py:33(_compile)
 
-The first line indicates that 197 calls were monitored.  Of those calls, 192
-were :dfn:`primitive`, meaning that the call was not induced via recursion. The
-next line: ``Ordered by: standard name``, indicates that the text string in the
-far right column was used to sort the output. The column headings include:
+첫줄은 197개의 함수호출이 있었다는 것을 보인다. 이 중에서 192개는 :dfn:`primitive`
+즉, 재귀(recursion)에 의한 것이 아니다.
+다음 줄의 ``Ordered by: standard name`` 표시는 결과가 가장 오른쪽 열의 문자열을 기준으로
+정렬되었다는 뜻이다.
+각 열의 의미는 다음과 같다.:
 
 ncalls
-   for the number of calls.
+   함수 호출 횟수
 
 tottime
-   for the total time spent in the given function (and excluding time made in
-   calls to sub-functions)
+   해당 함수에서 사용된 총 시간(하위 함수 호출에 소요된 시간은 제외한다.)
 
 percall
-   is the quotient of ``tottime`` divided by ``ncalls``
+   ``tottime``\ 을 ``ncalls``\ 로 나눈 값
 
 cumtime
-   is the cumulative time spent in this and all subfunctions (from invocation
-   till exit). This figure is accurate *even* for recursive functions.
+   해당 함수와 모든 하위 함수에서 (함수 호출 시작부터 종료까지) 소비된 시간의 누적.
+   이 수치는 재귀함수에서도 정확한 값이다.
 
 percall
-   is the quotient of ``cumtime`` divided by primitive calls
+   ``cumtime``\ 을 primitive 호출 횟수로 나눈 값
 
 filename:lineno(function)
-   provides the respective data of each function
+   각 함수에 대한 정보
 
-When there are two numbers in the first column (for example ``3/1``), it means
-that the function recursed.  The second value is the number of primitive calls
-and the former is the total number of calls.  Note that when the function does
-not recurse, these two values are the same, and only the single figure is
-printed.
+첫번째 열의 숫자 두 개(예를 들어 ``3/1``)는 함수의 재귀 횟수를 뜻한다.
+두번째 숫자는 primitive 호출 횟수이고 앞의 숫자는 전체 호출 횟수이다.
+재귀함수가 아니면 두 값이 같으므로 하나만 표시된다.
 
-Instead of printing the output at the end of the profile run, you can save the
-results to a file by specifying a filename to the :func:`run` function::
+프로파일 종료시에 결과를 인쇄하지 않고 파일에 저장하려면 :func:`run`\ 에
+파일 이름을 명시한다.::
 
    import cProfile
    import re
    cProfile.run('re.compile("foo|bar")', 'restats')
 
-The :class:`pstats.Stats` class reads profile results from a file and formats
-them in various ways.
-
-The file :mod:`cProfile` can also be invoked as a script to profile another
-script.  For example::
+:class:`pstats.Stats` 클래스는 이 파일의 프로파일 결과를 읽어 여러가지 형태로 바꿀 수 있다.
+예를 들어::
 
    python -m cProfile [-o output_file] [-s sort_order] (-m module | myscript.py)
 
-``-o`` writes the profile results to a file instead of to stdout
+``-o`` 프로파일 결과를 표준출력이 아닌 파일에 쓴다.
 
-``-s`` specifies one of the :func:`~pstats.Stats.sort_stats` sort values to sort
-the output by. This only applies when ``-o`` is not supplied.
+``-s`` :func:`~pstats.Stats.sort_stats` 결과를 해당 기준으로 정렬한다. ``-o``\ 이 없을 때만 가능하다.
 
-``-m`` specifies that a module is being profiled instead of a script.
+``-m`` 스크립트 대신에 모듈을 제공한다.
 
    .. versionadded:: 3.7
-      Added the ``-m`` option.
+      ``-m`` 옵션 추가.
 
-The :mod:`pstats` module's :class:`~pstats.Stats` class has a variety of methods
-for manipulating and printing the data saved into a profile results file::
+:mod:`pstats` 모듈의 :class:`~pstats.Stats` 클래스는 프로파일 결과 파일에 저장된 데이터를
+조작하고 인쇄하는 다양한 메서드를 가지고 있다.::
 
    import pstats
    p = pstats.Stats('restats')
