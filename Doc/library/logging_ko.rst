@@ -88,7 +88,7 @@
       로거가 루트 로거일 때 모든 메세지가 처리된다.)
       루트 로거는 :const:`WARNING` 레벨로 생성된다는 점에 유의한다.
 
-      When a logger is created, the level is set to :const:`NOTSET` (which causes
+      원문: When a logger is created, the level is set to :const:`NOTSET` (which causes
       all messages to be processed when the logger is the root logger, or delegation
       to the parent when the logger is a non-root logger). Note that the root logger
       is created with level :const:`WARNING`.
@@ -102,9 +102,9 @@
       만약 루트 로거까지 거슬러 올라가게 되었는데 루트 로거의 레벨이 NOTSET이면 모든 메세지가 처리된다.
       레벨이 NOTSET이 아니면 루트 로거의 레벨이 실질 레벨로 사용된다.
 
-      레벨 목록은 :ref:`levels`\ 를 참조한다.
+      레벨 목록은 :ref:`levels`\ 을 참조한다.
 
-\      .. versionchanged:: 3.2
+      .. versionchanged:: 3.2
          *lvl* 파라미터로 :const:`INFO`\ 에 해당하는 정수 상수 대신 문자열 'INFO'\ 를 쓸 수 있다.
          하지만 내부적으로는 정수로 저장되며 :meth:`getEffectiveLevel`, :meth:`isEnabledFor` 메서드 등은
          여전히 정수 인수를 반환하거나 받는다는 점에 주의 한다.
@@ -149,7 +149,7 @@
       *exc_info*\ 를 지정한 경우에는 현재 쓰레드에서 스택의 바닥부터 로그 호출까지의 정보이지만
       *stack_info*\ 는 예외 핸들러를 찾으면서 나온 예외들을 말한다.
 
-      The
+      원문: The
       former is stack frames from the bottom of the stack up to the logging call
       in the current thread, whereas the latter is information about stack frames
       which have been unwound, following an exception, while searching for
@@ -205,117 +205,109 @@
 
    .. method:: Logger.info(msg, *args, **kwargs)
 
-      Logs a message with level :const:`INFO` on this logger. The arguments are
-      interpreted as for :meth:`debug`.
+      :const:`INFO` 레벨로 메세지를 로깅한다. 인수는 :meth:`debug`\ 와 같다.
 
 
    .. method:: Logger.warning(msg, *args, **kwargs)
 
-      Logs a message with level :const:`WARNING` on this logger. The arguments are
-      interpreted as for :meth:`debug`.
+      :const:`WARNING` 레벨로 메세지를 로깅한다. 인수는 :meth:`debug`\ 와 같다.
 
-      .. note:: There is an obsolete method ``warn`` which is functionally
-         identical to ``warning``. As ``warn`` is deprecated, please do not use
-         it - use ``warning`` instead.
+      .. note:: 과거에는 ``warning``\ 과 같은 의미의 ``warn`` 메서드가 있었으나 퇴출되었다.
+         ``warning`` 메서드를 사용하라.
 
    .. method:: Logger.error(msg, *args, **kwargs)
 
-      Logs a message with level :const:`ERROR` on this logger. The arguments are
-      interpreted as for :meth:`debug`.
+      :const:`ERROR` 레벨로 메세지를 로깅한다. 인수는 :meth:`debug`\ 와 같다.
 
 
    .. method:: Logger.critical(msg, *args, **kwargs)
 
-      Logs a message with level :const:`CRITICAL` on this logger. The arguments are
-      interpreted as for :meth:`debug`.
+      :const:`CRITICAL` 레벨로 메세지를 로깅한다. 인수는 :meth:`debug`\ 와 같다.
 
 
    .. method:: Logger.log(lvl, msg, *args, **kwargs)
 
-      Logs a message with integer level *lvl* on this logger. The other arguments are
-      interpreted as for :meth:`debug`.
+      정수 레벨 *lvl*\ 로 메세지를 로깅한다. 인수는 :meth:`debug`\ 와 같다.
 
 
    .. method:: Logger.exception(msg, *args, **kwargs)
 
-      Logs a message with level :const:`ERROR` on this logger. The arguments are
-      interpreted as for :meth:`debug`. Exception info is added to the logging
-      message. This method should only be called from an exception handler.
+      :const:`ERROR` 레벨로 메세지를 로깅한다. 인수는 :meth:`debug`\ 와 같다.
+      에외 정보가 로그 메세지에 더해진다.
+      이 메서드는 예외 핸들러에서만 호출해야 한다.
 
 
    .. method:: Logger.addFilter(filt)
 
-      Adds the specified filter *filt* to this logger.
+      필터 *filt*\ 를 로거에 추가한다.
 
 
    .. method:: Logger.removeFilter(filt)
 
-      Removes the specified filter *filt* from this logger.
+      필터 *filt*\ 를 로거에서 제거한다.
 
 
    .. method:: Logger.filter(record)
 
-      Applies this logger's filters to the record and returns a true value if the
-      record is to be processed. The filters are consulted in turn, until one of
-      them returns a false value. If none of them return a false value, the record
-      will be processed (passed to handlers). If one returns a false value, no
-      further processing of the record occurs.
+      로거의 필터에 레코드를 적용하고 만약 레코드가 처리되면 참 값을 반환한다.
+      필터는 거짓 값이 나올 때까지 차례대로 적용된다.
+      만약 거짓 값을 반환하는 필터가 없으면 처리가 끝나고 핸들러로 전송된다.
+      필터 중 하나라도 거짓 값을 반환하면 레코드가 처리되지 않는다.
 
 
    .. method:: Logger.addHandler(hdlr)
 
-      Adds the specified handler *hdlr* to this logger.
+      핸들러 *hdlr*\ 를 로거에 추가한다.
 
 
    .. method:: Logger.removeHandler(hdlr)
 
-      Removes the specified handler *hdlr* from this logger.
+      핸들러 *hdlr*\ 를 로거에서 제거한다.
 
 
    .. method:: Logger.findCaller(stack_info=False)
 
-      Finds the caller's source filename and line number. Returns the filename, line
-      number, function name and stack information as a 4-element tuple. The stack
-      information is returned as ``None`` unless *stack_info* is ``True``.
+      호출 함수의 소스 파일 이름과 행 번호를 찾는다.
+      파일 이름, 행 번호, 함수 이름, 스택 정보를 4-원소 튜플로 반환한다.
+      *stack_info*\ 가 ``True``\ 가 아니면 스택 정보는 ``None``\ 을 반환한다.
 
 
    .. method:: Logger.handle(record)
 
-      Handles a record by passing it to all handlers associated with this logger and
-      its ancestors (until a false value of *propagate* is found). This method is used
-      for unpickled records received from a socket, as well as those created locally.
-      Logger-level filtering is applied using :meth:`~Logger.filter`.
+      레코드를 해당 로거와 (*propagate* 값이 거짓인 로그를 찾을 때까지) 그 조상 로거에
+      연결된 모든 핸들러에게 전달한다.
+      이 메서드는 레코드를 소켓에서 받아 pickle 직렬화가 어렵거나 지역적으로 생성되었을 때
+      사용된다.
+      :meth:`~Logger.filter`\ 을 사용한 로거 레벨 필터링이 적용된다.
 
 
    .. method:: Logger.makeRecord(name, lvl, fn, lno, msg, args, exc_info, func=None, extra=None, sinfo=None)
 
-      This is a factory method which can be overridden in subclasses to create
-      specialized :class:`LogRecord` instances.
+      특수한 :class:`LogRecord` 인스턴스를 생성하기 위해 서브클래스에 오버라이된 팩토리 메서드
+
 
    .. method:: Logger.hasHandlers()
 
-      Checks to see if this logger has any handlers configured. This is done by
-      looking for handlers in this logger and its parents in the logger hierarchy.
-      Returns ``True`` if a handler was found, else ``False``. The method stops searching
-      up the hierarchy whenever a logger with the 'propagate' attribute set to
-      false is found - that will be the last logger which is checked for the
-      existence of handlers.
+      로거가 설정이 완료된 핸들러를 가지고 있는지 확인한다.
+      로거와 로거 계층 상의 모든 부모 로그를 확인한다.
+      만약 핸들러를 발견하면 ``True``\ 를 반환하고 그렇지 않으면 ``False``\ 를 반환한다.
+      로그 계층 탐색 중에 어떤 로그의 'propagate' 속성이 거짓이면 탐색이 중지된다.
+      핸들러가 있는지 없는지는 따라서 그 로그까지만 확인된다.
 
       .. versionadded:: 3.2
 
    .. versionchanged:: 3.7
-      Loggers can now be picked and unpickled.
+      로거도 pickle 직렬화할 수 있다.
 
 .. _levels:
 
 로깅 레벨
 --------------
 
-The numeric values of logging levels are given in the following table. These are
-primarily of interest if you want to define your own levels, and need them to
-have specific values relative to the predefined levels. If you define a level
-with the same numeric value, it overwrites the predefined value; the predefined
-name is lost.
+로그 레벨에 대한 수치 값을 다음 표에 나타내었다.
+자체적인 로그 레벨을 정의하고 미리 정해진 레벨 대비 상대적인 중요도를 정하고 싶을 때 유용하다.
+만약 기존의 수치 값과 같은 레벨을 정의 하면 기존의 레벨을 덮어쓰므로 기존의 레벨 이름이 없어진다.
+
 
 +--------------+---------------+
 | Level        | Numeric value |
