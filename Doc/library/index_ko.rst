@@ -55,7 +55,7 @@
    i18n.rst
    frameworks.rst
    tk.rst
-   development.rst
+   development_ko.rst
    debug_ko.rst
    distribution.rst
    python.rst
