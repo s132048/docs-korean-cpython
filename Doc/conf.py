@@ -208,5 +208,5 @@ locale_dirs = ['locale/']
 gettext_compact = False
 
 suppress_warnings = [
-    "toc.secnum", "ref.ref", "ref.numref",
+    "toc.secnum", "ref.ref", "ref.numref", "ref.doc",
 ]
