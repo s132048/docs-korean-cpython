@@ -26,6 +26,7 @@ copyright = '2001-%s, 파이썬 소프트웨어 재단' % time.strftime('%Y')
 # We look for the Include/patchlevel.h file in the current Python source tree
 # and replace the values accordingly.
 import patchlevel
+
 version, release = patchlevel.get_version_info()
 
 # There are two options for replacing |today|: either, you set today to some
@@ -42,8 +43,7 @@ needs_sphinx = '1.2'
 
 # Ignore any .rst files in the venv/ directory.
 venvdir = os.getenv('VENVDIR', 'venv')
-exclude_patterns = [venvdir+'/*', 'README.rst']
-
+exclude_patterns = [venvdir + '/*', 'README.rst']
 
 # Options for HTML output
 # -----------------------
@@ -88,7 +88,6 @@ htmlhelp_basename = 'python' + release.replace('.', '')
 
 # Split the index
 html_split_index = True
-
 
 # Options for LaTeX output
 # ------------------------
@@ -188,9 +187,8 @@ coverage_c_regexes = {
 # The coverage checker will ignore all C items whose names match these regexes
 # (using re.match) -- the keys must be the same as in coverage_c_regexes.
 coverage_ignore_c_items = {
-#    'cfunction': [...]
+    #    'cfunction': [...]
 }
-
 
 # Options for the link checker
 # ----------------------------
@@ -200,7 +198,6 @@ linkcheck_ignore = [r'https://bugs.python.org/(issue)?\d+',
                     # Ignore PEPs for now, they all have permanent redirects.
                     r'http://www.python.org/dev/peps/pep-\d+']
 
-
 # Options for extensions
 # ----------------------
 
@@ -209,3 +206,7 @@ refcount_file = 'data/refcounts.dat'
 
 locale_dirs = ['locale/']
 gettext_compact = False
+
+suppress_warnings = [
+    "toc.secnum", "ref.ref", "ref.numref",
+]
