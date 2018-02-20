@@ -13,7 +13,7 @@
    c-api/index.rst
    distributing/index.rst
    installing/index.rst
-   howto/index.rst
+   howto/index_ko.rst
    faq/index.rst
    glossary_ko.rst
 

@@ -18,8 +18,8 @@
    argparse.rst
    getopt.rst
    logging_ko.rst
-   logging.config.rst
-   logging.handlers.rst
+   logging.config_ko.rst
+   logging.handlers_ko.rst
    getpass.rst
    curses.rst
    curses.ascii.rst
