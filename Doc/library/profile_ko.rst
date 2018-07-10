@@ -14,7 +14,7 @@
 =============================
 
 .. index::
-single: 결정론적 프로파일링
+   single: 결정론적 프로파일링
    single: profiling, deterministic
 
 :mod:`cProfile`\ 와 :mod:`profile`\ 는 파이썬 프로그램을
@@ -122,7 +122,7 @@ filename:lineno(function)
 ``-m`` 스크립트 대신에 모듈을 제공한다.
 
    .. versionadded:: 3.7
-``-m`` 옵션 추가.
+      ``-m`` 옵션 추가.
 
 :mod:`pstats` 모듈의 :class:`~pstats.Stats` 클래스는 프로파일 결과 파일에 저장된 데이터를
 조작하고 인쇄하는 다양한 메서드를 가지고 있다.::
@@ -185,7 +185,7 @@ filename:lineno(function)
 
 .. module:: cProfile
 .. module:: profile
-:synopsis: Python source profiler.
+   :synopsis: Python source profiler.
 
 :mod:`profile`\ 과 :mod:`cProfile` 모듈은 모두 다음 함수를 제공한다.
 
@@ -271,7 +271,7 @@ filename:lineno(function)
 프로파일러 데이터 분석은 :class:`~pstats.Stats` 클래스를 사용해 이루어진다.
 
 .. module:: pstats
-:synopsis: 프로파일러와 사용하기 위한 통계 객체.
+   :synopsis: 프로파일러와 사용하기 위한 통계 객체.
 
 .. class:: Stats(*filenames or profile, stream=sys.stdout)
 
