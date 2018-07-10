@@ -14,7 +14,7 @@
 =============================
 
 .. index::
-   single: 결정론적 프로파일링
+single: 결정론적 프로파일링
    single: profiling, deterministic
 
 :mod:`cProfile`\ 와 :mod:`profile`\ 는 파이썬 프로그램을
@@ -122,7 +122,7 @@ filename:lineno(function)
 ``-m`` 스크립트 대신에 모듈을 제공한다.
 
    .. versionadded:: 3.7
-      ``-m`` 옵션 추가.
+``-m`` 옵션 추가.
 
 :mod:`pstats` 모듈의 :class:`~pstats.Stats` 클래스는 프로파일 결과 파일에 저장된 데이터를
 조작하고 인쇄하는 다양한 메서드를 가지고 있다.::
@@ -131,112 +131,94 @@ filename:lineno(function)
    p = pstats.Stats('restats')
    p.strip_dirs().sort_stats(-1).print_stats()
 
-The :meth:`~pstats.Stats.strip_dirs` method removed the extraneous path from all
-the module names. The :meth:`~pstats.Stats.sort_stats` method sorted all the
-entries according to the standard module/line/name string that is printed. The
-:meth:`~pstats.Stats.print_stats` method printed out all the statistics.  You
-might try the following sort calls::
+위 예시에서서 사용된 메서드들은 다음과 같은 역할을 한다.
+:meth:`~pstats.Stats.strip_dirs` 메서드는 모든 모듈 이름으로부터 불필요한 경로명을 삭제한다.
+:meth:`~pstats.Stats.sort_stats` 메서드는 인쇄되는 표준 모듈/행/이름 문자열에 따라 모든 항목을 정렬한다.
+:meth:`~pstats.Stats.print_stats` 메서드는 모든 통계를 인쇄한다. 다음과 같은 정 호출을 시도할 수 있다. ::
 
    p.sort_stats('name')
    p.print_stats()
 
-The first call will actually sort the list by function name, and the second call
-will print out the statistics.  The following are some interesting calls to
-experiment with::
+첫번째 호출은 실제로 함수명에 따라 목록을 정렬하고 두번째 호출이 통계를 인쇄한다.
+다음과 같은 흥미로운 호출도 시험해볼 수 있다. ::
 
    p.sort_stats('cumulative').print_stats(10)
 
-This sorts the profile by cumulative time in a function, and then only prints
-the ten most significant lines.  If you want to understand what algorithms are
-taking time, the above line is what you would use.
+이 호출은 프로파일을 함수의 누적 시간에 따라 정렬하고 가장 중요한 열개의 라인만을 인쇄한다.
+어떤 알고리즘이 시간을 잡아먹는지 알고 싶다면 위 예시를 사용할 수 있다.
 
-If you were looking to see what functions were looping a lot, and taking a lot
-of time, you would do::
+어떤 함수가 루프를 많이 돌아 긴 시간을 잡아먹는지 알고 싶다면 다음을 사용한다. ::
 
    p.sort_stats('time').print_stats(10)
 
-to sort according to time spent within each function, and then print the
-statistics for the top ten functions.
+각 함수가 사용한 시간에 따라 정렬되고 상위 열개 함수를 인쇄한다.
 
-You might also try::
+다음 호출도 시도해볼 수 있다. ::
 
    p.sort_stats('file').print_stats('__init__')
 
-This will sort all the statistics by file name, and then print out statistics
-for only the class init methods (since they are spelled with ``__init__`` in
-them).  As one final example, you could try::
+이 호출은 모든 통계를 파일명에 따라 정렬하고 init 메서드 클래스와 관련된 통계만을 인쇄한다.
+(``__init__``\ 을 인수로 넣었기 때문이다.) 마지막 예시로 다음 호출을 시도해보자. ::
 
    p.sort_stats('time', 'cumulative').print_stats(.5, 'init')
 
-This line sorts statistics with a primary key of time, and a secondary key of
-cumulative time, and then prints out some of the statistics. To be specific, the
-list is first culled down to 50% (re: ``.5``) of its original size, then only
-lines containing ``init`` are maintained, and that sub-sub-list is printed.
+이 호출은 모든 통계를 기본 키가 되는 시간과 보조키가 되는 누적 시간으로 정렬하고 통계의 일부를 인쇄한다.
+자세히 설명하자면 전체 목록은 원래 목록에서 50%로 추려지고 (인수: ``.5``) ``init``\ 을 포함하는 행만이 남는다.
+마지막으로 남은 목록이 인쇄된다.
 
-If you wondered what functions called the above functions, you could now (``p``
-is still sorted according to the last criteria) do::
+위 함수 중 어떤 함수가 호출되는지도 알 수 있다. (``p``\ 는 마지막 기준에 따라 정렬된다.) ::
 
    p.print_callers(.5, 'init')
 
-and you would get a list of callers for each of the listed functions.
+위 호출로 나열된 각 함수의 호출기 목록을 볼 수 있다.
 
-If you want more functionality, you're going to have to read the manual, or
-guess what the following functions do::
+더 많은 기능을 원한다면 매뉴얼을 읽어보거나 다음 함수가 하는 일에 대해서 알아본다. ::
 
    p.print_callees()
    p.add('restats')
 
-Invoked as a script, the :mod:`pstats` module is a statistics browser for
-reading and examining profile dumps.  It has a simple line-oriented interface
-(implemented using :mod:`cmd`) and interactive help.
+스크립트로 호출되는 :mod:`pstats` 모듈은 프로파일 덤프를 읽고 조사하는 통계 브라우저다.
+이 모듈은 :mod:`cmd`\ 를 사용해 구현된 간단한 행 지향 인터페이스와 대화형 인터페이스를 갖는다.
 
-:mod:`profile` and :mod:`cProfile` Module Reference
+:mod:`profile`, :mod:`cProfile` 모듈 레퍼런스
 =======================================================
 
 .. module:: cProfile
 .. module:: profile
-   :synopsis: Python source profiler.
+:synopsis: Python source profiler.
 
-Both the :mod:`profile` and :mod:`cProfile` modules provide the following
-functions:
+:mod:`profile`\ 과 :mod:`cProfile` 모듈은 모두 다음 함수를 제공한다.
 
 .. function:: run(command, filename=None, sort=-1)
 
-   This function takes a single argument that can be passed to the :func:`exec`
-   function, and an optional file name.  In all cases this routine executes::
+   이 함수는 :func:`exec` 함수로 보내질 수 있는 단일 인수와 선택 인수 파일명을 인수로 받는다.
+   모든 경우에 이 루틴은 다음을 실행한다. ::
 
       exec(command, __main__.__dict__, __main__.__dict__)
 
-   and gathers profiling statistics from the execution. If no file name is
-   present, then this function automatically creates a :class:`~pstats.Stats`
-   instance and prints a simple profiling report. If the sort value is specified,
-   it is passed to this :class:`~pstats.Stats` instance to control how the
-   results are sorted.
+   실행에서 프로파일링 통계를 모은다. ``filename`` 인수가 없으면 함수는 자동으로 :class:`~pstats.Stats`
+   인스턴스를 생성하고 간단한 프로파일링 리포트를 인쇄한다. ``sort`` 인수가 지정되면 :class:`~pstats.Stats`
+   인스턴스로 보내져 결과값을 정렬하는 방법을 결정한다. ::
 
 .. function:: runctx(command, globals, locals, filename=None, sort=-1)
 
-   This function is similar to :func:`run`, with added arguments to supply the
-   globals and locals dictionaries for the *command* string. This routine
-   executes::
+이 함수는 :func:`run` 함수와 비슷하지만 *command* 문자열을 위한 전역, 지역 딕셔너리를 제공하는 인수가 추가되어 있다.
+   이 루틴은 다음을 실행한다. ::
 
       exec(command, globals, locals)
 
-   and gathers profiling statistics as in the :func:`run` function above.
+   :func:`run` 함수를 실행한 것처럼 프로파일링 통계를 수집한다.
 
 .. class:: Profile(timer=None, timeunit=0.0, subcalls=True, builtins=True)
 
-   This class is normally only used if more precise control over profiling is
-   needed than what the :func:`cProfile.run` function provides.
+   이 클래스는 일반적으로 :func:`cProfile.run` 함수가 제공하는 것보다 더 정밀하게 프로파일링을 제어해야 할 때에만 사용된다.
 
-   A custom timer can be supplied for measuring how long code takes to run via
-   the *timer* argument. This must be a function that returns a single number
-   representing the current time. If the number is an integer, the *timeunit*
-   specifies a multiplier that specifies the duration of each unit of time. For
-   example, if the timer returns times measured in thousands of seconds, the
-   time unit would be ``.001``.
+   코드가 실행되는데 필요한 시간을 측정하기 위한 커스텀 타이머를 *timer* 인수에 줄 수 있다.
+   이 타이머는 반드시 현재 시간을 나타내는 하나의 숫자만을 반환하는 함수가 되어야 한다.
+   숫자가 정수면 *timeunit* 인수는 시간의 각 단위가 갖는 지속 시간을 지정하는 승수를 지정한다.
+   예를 들어, 타이머가 천 초 단위로 측정되는 시간을 반환하면 *timeunit*은 ``.001``\ 가 된다.
 
-   Directly using the :class:`Profile` class allows formatting profile results
-   without writing the profile data to a file::
+   :class:`Profile` 클래스를 직접 사용하면 프로파일 데이터를 파일에 작성하지 않고 프로파일 결과를 포매팅할 수 있다. ::
 
       import cProfile, pstats, io
       pr = cProfile.Profile()
@@ -251,303 +233,233 @@ functions:
 
    .. method:: enable()
 
-      Start collecting profiling data.
+      프로파일링 데이터 수집을 시작한다.
 
    .. method:: disable()
 
-      Stop collecting profiling data.
+      프로파일링 데이터 수집을 중단한다.
 
    .. method:: create_stats()
 
-      Stop collecting profiling data and record the results internally
-      as the current profile.
+      프로파일링 데이터 수집을 중단하고 결과를 현재 프로파일로 내부에 기록한다.
 
    .. method:: print_stats(sort=-1)
 
-      Create a :class:`~pstats.Stats` object based on the current
-      profile and print the results to stdout.
+      현재 프로파일에 기반해 :class:`~pstats.Stats` 객체를 생성하고 stdout으로 결과를 인쇄한다.
 
    .. method:: dump_stats(filename)
 
-      Write the results of the current profile to *filename*.
+      현재 프로파일 결과를 *filename*에 작성한다.
 
    .. method:: run(cmd)
 
-      Profile the cmd via :func:`exec`.
+      cmd를 :func:`exec`\ 를 통해 명령을 프로파일링한다.
 
    .. method:: runctx(cmd, globals, locals)
 
-      Profile the cmd via :func:`exec` with the specified global and
-      local environment.
+      cmd를 지정된 전역, 지역 변수로 :func:`exec` \ 를 통해 프로파일링한다.
 
    .. method:: runcall(func, *args, **kwargs)
 
-      Profile ``func(*args, **kwargs)``
+      ``func(*args, **kwargs)``\ 를 프로파일링 한다.
 
 .. _profile-stats:
 
-The :class:`Stats` Class
+:class:`Stats` 클래스
 ========================
 
-Analysis of the profiler data is done using the :class:`~pstats.Stats` class.
+프로파일러 데이터 분석은 :class:`~pstats.Stats` 클래스를 사용해 이루어진다.
 
 .. module:: pstats
-   :synopsis: Statistics object for use with the profiler.
+:synopsis: 프로파일러와 사용하기 위한 통계 객체.
 
 .. class:: Stats(*filenames or profile, stream=sys.stdout)
 
-   This class constructor creates an instance of a "statistics object" from a
-   *filename* (or list of filenames) or from a :class:`Profile` instance. Output
-   will be printed to the stream specified by *stream*.
+   이 클래스 생성자는 *filename* 또는 *filename* 리스트나 :class:`Profile` 인스턴스로부터
+   "통계 객체" 인스턴스를 생성한다. 출력은 *stream*에 지정된 스트림에 인쇄된다.
 
-   The file selected by the above constructor must have been created by the
-   corresponding version of :mod:`profile` or :mod:`cProfile`.  To be specific,
-   there is *no* file compatibility guaranteed with future versions of this
-   profiler, and there is no compatibility with files produced by other
-   profilers.  If several files are provided, all the statistics for identical
-   functions will be coalesced, so that an overall view of several processes can
-   be considered in a single report.  If additional files need to be combined
-   with data in an existing :class:`~pstats.Stats` object, the
-   :meth:`~pstats.Stats.add` method can be used.
+   위 생성자에 의해 선택된 파일은 반드시 호환되는 버전의 :mod:`profile`\ 이나
+   :mod:`cProfile`\ 에 의해 생성되어야 한다. 명확히 하자면 프로파일러의 향후
+   버전과의 파일 호환성은 보장되지 않고 서로 다른 프로파일러에 의해 생성된 파일들은
+   호환되지 않는다. 여러 파일이 제공되면 동일한 함수를 위한 모든 통계는 병합되어
+   여러 프로세스에 대한 보고가 하나의 리포트가 될 수 있게 한다. 기존 :class:`~pstats.Stats`
+   객체에 있는 데이터와 추가 파일이 병합되어야 하면 :meth:`~pstats.Stats.add` 메서드를 사용한다.
 
-   Instead of reading the profile data from a file, a :class:`cProfile.Profile`
-   or :class:`profile.Profile` object can be used as the profile data source.
+   파일 대신 :class:`cProfile.Profile`\ 나 :class:`profile.Profile` 객체를 소스로 사용해
+   프로파일 데이터를 읽을 수 있다.
 
-   :class:`Stats` objects have the following methods:
+   :class:`Stats` 객체는 다음 메서드를 갖는다.
 
    .. method:: strip_dirs()
 
-      This method for the :class:`Stats` class removes all leading path
-      information from file names.  It is very useful in reducing the size of
-      the printout to fit within (close to) 80 columns.  This method modifies
-      the object, and the stripped information is lost.  After performing a
-      strip operation, the object is considered to have its entries in a
-      "random" order, as it was just after object initialization and loading.
-      If :meth:`~pstats.Stats.strip_dirs` causes two function names to be
-      indistinguishable (they are on the same line of the same filename, and
-      have the same function name), then the statistics for these two entries
-      are accumulated into a single entry.
+      :class:`Stats` 클래스를 위한 이 메서드는 파일명 앞에 오는 모든 경로 정보를 삭제한다.
+      출력물의 사이즈를 줄여 80 컬럼 이내로 맞출 때 유용하다. 이 메서드는 객체를 수정하기
+      때문에 삭제된 정보는 손실된다. 삭제 작업을 한 후에는 객체의 항목들이 객체가 초기화 되고
+      로드되었을 때처럼 임의의 순서로 정렬된 것으로 간주된다. :meth:`~pstats.Stats.strip_dirs`
+      메서드로 인해 두개의 함수명이 같아지면 (같은 파일명, 같은 행에 있고 같은 함수명을 갖는 경우)
+      이 두 항목에 대한 통계는 하나의 항목에 대한 통계로 합쳐진다.
 
 
    .. method:: add(*filenames)
 
-      This method of the :class:`Stats` class accumulates additional profiling
-      information into the current profiling object.  Its arguments should refer
-      to filenames created by the corresponding version of :func:`profile.run`
-      or :func:`cProfile.run`. Statistics for identically named (re: file, line,
-      name) functions are automatically accumulated into single function
-      statistics.
+      :class:`Stats` 클래스의 ``add`` 메서드는 추가 프로파일링 정보를 현재 프로파일링 객체에 합친다.
+      인수가 지정하는 파일은 호환되는 :func:`profile.run`\ 이나 :func:`cProfile.run` 버전에 의해
+      생성되어야 한다. 같은 이름 (같은 파일, 행, 이름)을 갖는 함수에 대한 통계는 자동으로 하나의 함수 통계에 합쳐진다.
 
 
    .. method:: dump_stats(filename)
 
-      Save the data loaded into the :class:`Stats` object to a file named
-      *filename*.  The file is created if it does not exist, and is overwritten
-      if it already exists.  This is equivalent to the method of the same name
-      on the :class:`profile.Profile` and :class:`cProfile.Profile` classes.
+      :class:`Stats` 객체에 로드된 데이터를 *filename* 인수에 지정된 파일에 저장한다.
+      지정된 파일이 존재하지 않으면 생성되고 이미 있는 파일인 경우에는 덮어쓴다.
+      :class:`profile.Profile`, :class:`cProfile.Profile` 클래스에 있는 같은 이름의 메서드와 동일하다.
 
 
    .. method:: sort_stats(*keys)
 
-      This method modifies the :class:`Stats` object by sorting it according to
-      the supplied criteria.  The argument is typically a string identifying the
-      basis of a sort (example: ``'time'`` or ``'name'``).
+      이 메서드는 주어진 기준에 따라 :class:`Stats` 객체를 정렬한다.
+      인수는 일반적으로 정렬 기준을 나타내는 문자열이다. (예시: ``time``, ``name``)
 
-      When more than one key is provided, then additional keys are used as
-      secondary criteria when there is equality in all keys selected before
-      them.  For example, ``sort_stats('name', 'file')`` will sort all the
-      entries according to their function name, and resolve all ties (identical
-      function names) by sorting by file name.
+      하나 이상의 키가 주어지고 이전에 선택된 모든 키가 동일하면 추가 키는 두번째 정렬 기준으로 사용된다.
+      예를 들어, ``sort_stats('name', 'file')``\ 는 모든 항목을 함수 이름에 따라 정렬하고 함수 이름으로
+      정렬된 묶음이 파일명에 따라 정렬된다.
 
-      Abbreviations can be used for any key names, as long as the abbreviation
-      is unambiguous.  The following are the keys currently defined:
+      약자명이 모호하지 않는 한 모든 키에 약자를 사용할 수 있다. 다음은 현재 정의된 키다.
 
       +------------------+----------------------+
       | Valid Arg        | Meaning              |
       +==================+======================+
-      | ``'calls'``      | call count           |
+      | ``'calls'``      | 호출 횟수            |
       +------------------+----------------------+
-      | ``'cumulative'`` | cumulative time      |
+      | ``'cumulative'`` | 누적 시간            |
       +------------------+----------------------+
-      | ``'cumtime'``    | cumulative time      |
+      | ``'cumtime'``    | 누적 시간            |
       +------------------+----------------------+
-      | ``'file'``       | file name            |
+      | ``'file'``       | 파일명               |
       +------------------+----------------------+
-      | ``'filename'``   | file name            |
+      | ``'filename'``   | 파일명               |
       +------------------+----------------------+
-      | ``'module'``     | file name            |
+      | ``'module'``     | 파일명               |
       +------------------+----------------------+
-      | ``'ncalls'``     | call count           |
+      | ``'ncalls'``     | 호출 횟수            |
       +------------------+----------------------+
-      | ``'pcalls'``     | primitive call count |
+      | ``'pcalls'``     | primitive 호출 횟수  |
       +------------------+----------------------+
-      | ``'line'``       | line number          |
+      | ``'line'``       | 행 번호              |
       +------------------+----------------------+
-      | ``'name'``       | function name        |
+      | ``'name'``       | 함수명               |
       +------------------+----------------------+
-      | ``'nfl'``        | name/file/line       |
+      | ``'nfl'``        | 이름/파일/행         |
       +------------------+----------------------+
-      | ``'stdname'``    | standard name        |
+      | ``'stdname'``    | 표준 이름            |
       +------------------+----------------------+
-      | ``'time'``       | internal time        |
+      | ``'time'``       | 인터널 타임          |
       +------------------+----------------------+
-      | ``'tottime'``    | internal time        |
+      | ``'tottime'``    | 인터널 타임          |
       +------------------+----------------------+
 
-      Note that all sorts on statistics are in descending order (placing most
-      time consuming items first), where as name, file, and line number searches
-      are in ascending order (alphabetical). The subtle distinction between
-      ``'nfl'`` and ``'stdname'`` is that the standard name is a sort of the
-      name as printed, which means that the embedded line numbers get compared
-      in an odd way.  For example, lines 3, 20, and 40 would (if the file names
-      were the same) appear in the string order 20, 3 and 40.  In contrast,
-      ``'nfl'`` does a numeric compare of the line numbers.  In fact,
-      ``sort_stats('nfl')`` is the same as ``sort_stats('name', 'file',
-      'line')``.
+      통계에 대한 모든 정렬은 내림차순으로 정렬된다. (시간이 오래 걸린 것이 가장 위에 온다.)
+      함수명, 파일명, 행 번호에 대한 정렬은 알파벳 기준으로 오름차순이다. ``'nfl'``\ 과 ``'stdname'``\ 의
+      미묘한 차이는 표준 이름이 인쇄되는 이름으로 정렬된다는 것이다. 따라서 행번호는 이상한 방식으로 정렬된다.
+      예를 들어, 행 번호 3, 20, 40은 같은 파일명을 가질 때 20, 3, 40 순서로 나타난다. 반대로 ``'nfl'``\ 은
+      행 번호의 숫자를 비교해 정렬한다. 사실 ``sort_stats('nfl')``\ 는 ``sort_stats('name', 'file','line')``\ 와 같다.
 
-      For backward-compatibility reasons, the numeric arguments ``-1``, ``0``,
-      ``1``, and ``2`` are permitted.  They are interpreted as ``'stdname'``,
-      ``'calls'``, ``'time'``, and ``'cumulative'`` respectively.  If this old
-      style format (numeric) is used, only one sort key (the numeric key) will
-      be used, and additional arguments will be silently ignored.
+      하위 호환성으로 인해 숫자 인수 ``-1``, ``0``, ``1``, ``2``\ 가 허용된다.
+      각 숫자 인수는 ``'stdname'``, ``'calls'``, ``'time'``, ``'cumulative'``\ 로 해석된다.
+      이러한 이전 스타일 포맷이 사용되면 숫자 인수만이 분류 키로 사용되고 추가 인수는 무시된다.
 
       .. For compatibility with the old profiler.
 
 
    .. method:: reverse_order()
 
-      This method for the :class:`Stats` class reverses the ordering of the
-      basic list within the object.  Note that by default ascending vs
-      descending order is properly selected based on the sort key of choice.
+      이 메서드는 객체 내부의 기본 목록을 반대로 정렬한다.
+      기본이 되는 오름, 내림 차순은 분류 키 선택에 따라 결정된다.
 
       .. This method is provided primarily for compatibility with the old
-         profiler.
+profiler.
 
 
    .. method:: print_stats(*restrictions)
 
-      This method for the :class:`Stats` class prints out a report as described
-      in the :func:`profile.run` definition.
+      이 메서드는 :func:`profile.run` 정의에 설명된 대로 리포트를 인쇄한다.
 
-      The order of the printing is based on the last
-      :meth:`~pstats.Stats.sort_stats` operation done on the object (subject to
-      caveats in :meth:`~pstats.Stats.add` and
-      :meth:`~pstats.Stats.strip_dirs`).
+      인쇄되는 순서는 개체에 마지막으로 행해진 :meth:`~pstats.Stats.sort_stats`  작업에 기반해 결정된다.
+      (:meth:`~pstats.Stats.add`, :meth:`~pstats.Stats.strip_dirs`\ 에 있는 주의 사항을 따른다.)
 
-      The arguments provided (if any) can be used to limit the list down to the
-      significant entries.  Initially, the list is taken to be the complete set
-      of profiled functions.  Each restriction is either an integer (to select a
-      count of lines), or a decimal fraction between 0.0 and 1.0 inclusive (to
-      select a percentage of lines), or a string that will interpreted as a
-      regular expression (to pattern match the standard name that is printed).
-      If several restrictions are provided, then they are applied sequentially.
-      For example::
+      인수가 주어지면 목록이 중요한 항목들만 포함하게 제한하는데 사용될 수 있다. 초기 목록은
+      프로파일된 함수의 전체 집합이 된다. 각 제한 조건은 행 수를 선택하기 위한 정수, 제한할 행의
+      비율을 선택하기 위한 0.0과 1.0 사이의 소수, 또는 정규 표현식으로 해석되는 문자열이 될 수 있다.
+      (정규 표현식은 출력될 표준 이름을 분류한다.) 여러 제한 조건이 주어지면 순서대로 적용된다. ::
 
          print_stats(.1, 'foo:')
 
-      would first limit the printing to first 10% of list, and then only print
-      functions that were part of filename :file:`.\*foo:`.  In contrast, the
-      command::
+      위 예시는 목록의 상위 10% 항목으로 제한하고 이 중에 파일명이 :file:`.\*foo:`\ 를 포함하는 함수만을 출력한다. ::
 
          print_stats('foo:', .1)
 
-      would limit the list to all functions having file names :file:`.\*foo:`,
-      and then proceed to only print the first 10% of them.
+      반대로 위 예시는 파일명이 :file:`.\*foo:`\ 를 포함하는 함수로 제한하고 여기에서 상위 10%만을 출력한다.
 
 
    .. method:: print_callers(*restrictions)
 
-      This method for the :class:`Stats` class prints a list of all functions
-      that called each function in the profiled database.  The ordering is
-      identical to that provided by :meth:`~pstats.Stats.print_stats`, and the
-      definition of the restricting argument is also identical.  Each caller is
-      reported on its own line.  The format differs slightly depending on the
-      profiler that produced the stats:
+      이 메서드는 프로파일된 데이터베이스에 있는 각 함수를 호출한 모든 함수 목록을 출력한다.
+      정렬 순서는 :meth:`~pstats.Stats.print_stats`\ 에 주어진 것과 동일하고 제한 조건 인수의 정의도 동일하다.
+      각 호출기는 자신의 행에 리포트된다. 포맷은 통계를 만들어내는 프로파일러에 따라 조금 달라진다.
 
-      * With :mod:`profile`, a number is shown in parentheses after each caller
-        to show how many times this specific call was made.  For convenience, a
-        second non-parenthesized number repeats the cumulative time spent in the
-        function at the right.
+      * :mod:`profile`\ 를 사용하면 각 호출기 다음 괄호 안에 숫자가 표시되고 특정 호출이 생성된 횟수를 나타낸다.
+        편의를 위해 오른쪽에 함수에 사용된 누적 시간이 괄호 없이 나타난다.
 
-      * With :mod:`cProfile`, each caller is preceded by three numbers: the
-        number of times this specific call was made, and the total and
-        cumulative times spent in the current function while it was invoked by
-        this specific caller.
+      * :mod:`cProfile`\ 을 사용하면 각 호출기 앞에 세개의 숫자가 나타난다.
+        특정 호출이 생성된 횟수, 현재 함수가 이 호출기에 의해 호출된 동안 사용한 총 시간과 누적 시간.
 
 
    .. method:: print_callees(*restrictions)
 
-      This method for the :class:`Stats` class prints a list of all function
-      that were called by the indicated function.  Aside from this reversal of
-      direction of calls (re: called vs was called by), the arguments and
-      ordering are identical to the :meth:`~pstats.Stats.print_callers` method.
+      지정된 함수에 의해 호출된 모든 함수의 목록을 인쇄한다. 호출의 방향은 반대지만 (호출하는 것과 호출되는 것)
+      사용되는 인수와 정렬는 :meth:`~pstats.Stats.print_callers`\ 와 동일하다.
 
 
 .. _deterministic-profiling:
 
-What Is 결정론적 프로파일링?
+결정론적 프로파일링이란?
 ================================
 
-:dfn:`결정론적 프로파일링` is meant to reflect the fact that all *function
-call*, *function return*, and *exception* events are monitored, and precise
-timings are made for the intervals between these events (during which time the
-user's code is executing).  In contrast, :dfn:`statistical profiling` (which is
-not done by this module) randomly samples the effective instruction pointer, and
-deduces where time is being spent.  The latter technique traditionally involves
-less overhead (as the code does not need to be instrumented), but provides only
-relative indications of where time is being spent.
+:dfn:`결정론적 프로파일링`\ 이란 모든 *함수 호출* *함수 반환*, *예외* 이벤트가 모니터링되고
+(사용자의 코드가 실행되는 동안) 각 이벤트 간에 정확한 시간 측정이 이루어진다는 의미다.
+반대로 (이 모듈이 하지 않는) :dfn:`통계적 프로파일링`\ 이란 유효한 명령 포인터를 임의로 샘플링하고
+사용되는 시간을 추정한다. 후자의 기술은 코드를 계측하지 않아도 되기 때문에 일반적으로
+오버헤드가 적지만 사용되는 시간에 대한 상대적인 지표를 제공한다.
 
-In Python, since there is an interpreter active during execution, the presence
-of instrumented code is not required to do 결정론적 프로파일링.  Python
-automatically provides a :dfn:`hook` (optional callback) for each event.  In
-addition, the interpreted nature of Python tends to add so much overhead to
-execution, that 결정론적 프로파일링 tends to only add small processing
-overhead in typical applications.  The result is that 결정론적 프로파일링 is
-not that expensive, yet provides extensive run time statistics about the
-execution of a Python program.
+파이썬에는 실행중에 활성화되는 해석기가 있기 때문에 결정론적 프로파일링을 위해 계측된 코드가 없어도 된다.
+파이썬은 자동으로 각 이벤트에 대해 :dfn:`hook`\ (선택 콜백)을 제공한다. 추가로 파이썬의 해석되는 특성으로 인해
+실행에 많은 오버헤드가 가해지기 때문에 결정론적 프로파일링은 일반적인 어플리케이션에서 적은 프로세싱 오버헤드를 준다.
+결과적으로 결정론적 프로파일링은 큰 비용 없이 실행 시간에 대한 폭넓은 통계를 제공한다.
 
-Call count statistics can be used to identify bugs in code (surprising counts),
-and to identify possible inline-expansion points (high call counts).  Internal
-time statistics can be used to identify "hot loops" that should be carefully
-optimized.  Cumulative time statistics should be used to identify high level
-errors in the selection of algorithms.  Note that the unusual handling of
-cumulative times in this profiler allows statistics for recursive
-implementations of algorithms to be directly compared to iterative
-implementations.
+호출 횟수 통계는 코드에 있는 버그나 (횟수가 이상한 경우) 인라인 확장 지점 (많은 호출 횟수가 많은 경우)을
+인식하는데 사용될 수 있다. 내부 시간 통계는 주의깊게 최적화해야 하는 "핫 루프"를 인식하는데 사용될 수 있다.
+누적 시간 통계는 알고리즘 선택과 관련된 높은 수준의 에러를 인식하는데 사용해야 한다.
+누적 시간에 대한 특이한 처리로 알고리즘의 재귀 구현과 반복 구현을 직접 비교하기 위한 통계를 얻을 수 있다.
 
 
 .. _profile-limitations:
 
-Limitations
+한계점
 ===========
 
-One limitation has to do with accuracy of timing information. There is a
-fundamental problem with deterministic profilers involving accuracy.  The most
-obvious restriction is that the underlying "clock" is only ticking at a rate
-(typically) of about .001 seconds.  Hence no measurements will be more accurate
-than the underlying clock.  If enough measurements are taken, then the "error"
-will tend to average out. Unfortunately, removing this first error induces a
-second source of error.
+하나의 한계점은 시간 정보의 정확성이다. 결정론적 프로파일러의 정확성에 대한 근본적인 문제가 있다.
+가장 분명한 제약은 내제된 "시계"가 일반적으로 약 .001초 단위로 간다는 것이다. 따라서 어떤 측정도
+이 시계보다 정확할 수 없다. 만약 충분한 측정이 이루어지면 "에러"가 평균화 된다. 불행히도 이 첫번째
+에러를 제거하면 두번째 에러가 나타난다.
 
-The second problem is that it "takes a while" from when an event is dispatched
-until the profiler's call to get the time actually *gets* the state of the
-clock.  Similarly, there is a certain lag when exiting the profiler event
-handler from the time that the clock's value was obtained (and then squirreled
-away), until the user's code is once again executing.  As a result, functions
-that are called many times, or call many functions, will typically accumulate
-this error. The error that accumulates in this fashion is typically less than
-the accuracy of the clock (less than one clock tick), but it *can* accumulate
-and become very significant.
+두번째 문제는 이벤트가 보내지고 시간을 얻기 위한 프로파일러의 호출이 실제로 시계의 상태를 얻을 때까지
+시간이 걸린다는 것이다. 이와 유사하게 이벤트 핸들러를 종료할 때 시계의 값이 얻어질 때부터 사용자의 코드가
+다시 실행될 때까지 지연이 존재한다. 그 결과 여러번 호출되거나 많은 함수를 호출하는 함수는 일반적으로
+이러한 에러를 축적한다. 이러한 방식으로 축적되는 에러는 일반적으로 시계의 정확도보다 작지만 축적되면 심각해질 수 있다.
 
-The problem is more important with :mod:`profile` than with the lower-overhead
-:mod:`cProfile`.  For this reason, :mod:`profile` provides a means of
-calibrating itself for a given platform so that this error can be
-probabilistically (on the average) removed. After the profiler is calibrated, it
-will be more accurate (in a least square sense), but it will sometimes produce
-negative numbers (when call counts are exceptionally low, and the gods of
-probability work against you :-). )  Do *not* be alarmed by negative numbers in
-the profile.  They should *only* appear if you have calibrated your profiler,
-and the results are actually better than without calibration.
+문제는 오버헤드가 적은 :mod:`cProfile`\ 보다 :mod:`profile`\ 에서 더 중요하다. 이러한 이유로 :mod:`profile`\ 은
+몇몇 플랫폼에서 보정 수단을 제공해 에러가 통계적으로(평균으로) 제거될 수 있게 한다. 프로파일러가 보정되고 나면
+(최소한 제곱 센스에서) 더 정확해지지만 종종 음수를 주기도 한다. (호출 횟수가 예외적으로 낮을 때) 프로파일에
+음수가 나타나도 놀라지 말자. 프로파일러를 보정했을 때만 나타나며 보정하지 않은 결과보다 정확하다.
 
 
 .. _profile-calibration:
