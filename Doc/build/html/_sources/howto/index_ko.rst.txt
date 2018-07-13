@@ -1,0 +1,32 @@
+******************************
+파이썬 하우투(HOWTO)
+******************************
+
+Python HOWTOs are documents that cover a single, specific topic,
+and attempt to cover it fairly completely. Modelled on the Linux
+Documentation Project's HOWTO collection, this collection is an
+effort to foster documentation that's more detailed than the
+Python Library Reference.
+
+Currently, the HOWTOs are:
+
+.. toctree::
+   :maxdepth: 1
+
+   pyporting.rst
+   cporting.rst
+   curses.rst
+   descriptor.rst
+   functional.rst
+   logging_ko.rst
+   logging-cookbook_ko.rst
+   regex.rst
+   sockets.rst
+   sorting.rst
+   unicode.rst
+   urllib2.rst
+   argparse.rst
+   ipaddress.rst
+   clinic.rst
+   instrumentation.rst
+
